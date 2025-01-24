@@ -1,4 +1,5 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
+import SearchBar from '@/Components/SearchBar';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -12,15 +13,19 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-white">
-                <Link href="/">
-                    <ApplicationLogo />
-                </Link>
+        <div className="bg-reddit-dark min-h-screen">
+            <nav className="border-reddit-border bg-reddit-dark border-b px-4 py-1.5">
+                <div className="flex flex-row items-center justify-between">
+                    <Link href="/">
+                        <ApplicationLogo />
+                    </Link>
+                    <SearchBar/>
+                    <div/>
+                </div>
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-white shadow-sm">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>

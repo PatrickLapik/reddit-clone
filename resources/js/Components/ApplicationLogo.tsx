@@ -1,8 +1,6 @@
-import { SVGAttributes } from 'react';
-
-export default function ApplicationLogo(props: SVGAttributes<SVGElement>) {
+export default function ApplicationLogo() {
     return (
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center" >
             <img className="mr-2 h-8 w-8" src="/logo.png" alt="logo" />
             <svg
                 className="h-[22px] fill-white"
