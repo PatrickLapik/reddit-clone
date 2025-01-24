@@ -1,4 +1,5 @@
 import Navbar from '@/Components/Navbar';
+import SideBar from '@/Components/SideBar';
 import { usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -14,6 +15,7 @@ export default function Authenticated({
     return (
         <div className="bg-reddit-dark min-h-screen">
             <Navbar />
+            <SideBar />
 
             {header && (
                 <header className="bg-white shadow-sm">

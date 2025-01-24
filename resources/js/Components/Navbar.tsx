@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 
 export default function Navbar() {
     return (
-        <nav className="border-reddit-border bg-reddit-dark border-b px-4 py-1.5">
+        <nav className="border-reddit-border bg-reddit-dark border-b px-4 py-1.5 sticky top-0">
             <div className="flex flex-row items-center justify-between">
                 <ApplicationLogo />
                 <SearchBar />
