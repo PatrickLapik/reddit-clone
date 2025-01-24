@@ -1,6 +1,5 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import SearchBar from '@/Components/SearchBar';
-import { Link, usePage } from '@inertiajs/react';
+import Navbar from '@/Components/Navbar';
+import { usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
 export default function Authenticated({
@@ -14,15 +13,7 @@ export default function Authenticated({
 
     return (
         <div className="bg-reddit-dark min-h-screen">
-            <nav className="border-reddit-border bg-reddit-dark border-b px-4 py-1.5">
-                <div className="flex flex-row items-center justify-between">
-                    <Link href="/">
-                        <ApplicationLogo />
-                    </Link>
-                    <SearchBar/>
-                    <div/>
-                </div>
-            </nav>
+            <Navbar />
 
             {header && (
                 <header className="bg-white shadow-sm">
