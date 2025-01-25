@@ -8,7 +8,7 @@ export default function NavButton({
     return (
         <Link
             {...props}
-            className={`hover:bg-reddit-dark-secondary flex p-2 items-center justify-center rounded-full text-white ${className}`}
+            className={`hover:bg-reddit-dark-secondary flex px-4 py-1 m-1 items-center justify-center rounded-full text-white ${className}`}
         >
             {children}
         </Link>

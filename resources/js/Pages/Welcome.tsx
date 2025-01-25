@@ -1,14 +1,60 @@
-import Authenticated from '@/Layouts/AuthenticatedLayout';
+import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Welcome() {
     return (
-        <Authenticated>
+        <DefaultLayout>
             <Head title="Reddit - Dive into anything" />
-            <div className='w-10 h-full'></div>
-            <div className='w-10 h-full'></div>
-            <div className='w-10 h-full'></div>
-            <div className='w-10 h-screen'></div>
-        </Authenticated>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+            <div className=''>this is a shitty school project</div>
+
+        </DefaultLayout>
     );
 }
