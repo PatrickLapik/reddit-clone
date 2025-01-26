@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         RateLimiter::for('upload', function (Request $request) {
-            return Limit::perMinute(1)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(3)->by($request->user()?->id ?: $request->ip());
         });
     }
 }

@@ -1,13 +1,16 @@
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 
-const AvatarUploadForm: React.FC = () => {
+interface ChildProps {
+  setState: React.Dispatch<React.SetStateAction<'uploadAvatar' | null>>;
+}
+
+const AvatarUploadForm: React.FC<ChildProps> = ({setState}) => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-    const { post, setData, data, errors, processing, recentlySuccessful } =
+    const { post, setData,  errors, processing} =
         useForm({
             avatar: null as File | null,
         });
@@ -40,7 +43,9 @@ const AvatarUploadForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        post(route('settings.profile.update'));
+        post(route('settings.profile.update'), {
+            onFinish: () => setState(null)
+        });
     };
 
     return (
@@ -77,17 +82,6 @@ const AvatarUploadForm: React.FC = () => {
                 message={errors.avatar}
                 className="w-full text-center"
             />
-            <Transition
-                show={recentlySuccessful}
-                enter="transition ease-in-out"
-                enterFrom="opacity-0"
-                leave="transition ease-in-out"
-                leaveTo="opacity-0"
-            >
-                <p className="w-full text-center text-sm text-green-600">
-                    Success! New avatar uploaded!
-                </p>
-            </Transition>
 
             <PrimaryButton disabled={processing} type="submit">
                 Upload Avatar

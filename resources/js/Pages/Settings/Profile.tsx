@@ -27,7 +27,7 @@ export default function Edit() {
                 show={activeModal === 'uploadAvatar'}
                 onClose={() => handleModal(null)}
             >
-                <UploadAvatarForm />
+                <UploadAvatarForm setState={setActiveModal}/>
             </Modal>
         </SettingsLayout>
     );
