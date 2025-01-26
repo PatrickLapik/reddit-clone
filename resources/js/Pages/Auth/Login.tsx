@@ -7,6 +7,12 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
+type LoginFormData = {
+    email: string,
+    password: string,
+    remember: boolean,
+}
+
 export default function Login({
     status,
     canResetPassword,
@@ -14,7 +20,7 @@ export default function Login({
     status?: string;
     canResetPassword: boolean;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<LoginFormData>({
         email: '',
         password: '',
         remember: false,
@@ -39,7 +45,7 @@ export default function Login({
             )}
 
             <form onSubmit={submit}>
-                <div>
+                <div className="h-full">
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
@@ -76,7 +82,9 @@ export default function Login({
                     <label className="flex items-center">
                         <Checkbox
                             checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setData('remember', e.target.checked)
+                            }
                         />
                         <span className="ms-2 text-sm text-gray-300">
                             Remember me
@@ -84,22 +92,36 @@ export default function Login({
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-300 underline hover:text-white focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                <div className="mt-4 flex flex-col items-start space-y-4">
+                    <div className="flex flex-col space-y-2">
+                        <div className="space-x-1 flex flex-row">
+                            <p className="text-sm">New around here?</p>
+                            <Link
+                                href={route('register')}
+                                className="rounded-md text-sm text-gray-300 underline hover:text-white focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+                            >
+                                Register
+                            </Link>
+                        </div>
+                        {canResetPassword && (
+                            <Link
+                                href={route('password.request')}
+                                className="rounded-md text-sm text-gray-300 underline hover:text-white focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+                            >
+                                Forgot your password?
+                            </Link>
+                        )}
+                    </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton
+                        className="mt-12 w-full"
+                        disabled={processing}
+                    >
                         Log in
                     </PrimaryButton>
                 </div>
+                <div></div>
             </form>
         </GuestLayout>
     );
 }
-

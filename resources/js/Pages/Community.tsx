@@ -24,7 +24,7 @@ export default function Community() {
             <Head title={`r/${community.name}`} />
 
             <div className="flex flex-col items-center justify-center">
-                <div className="flex h-screen w-[1120px] flex-col px-4 pt-2">
+                <div className="flex h-screen w-[1120px] flex-col px-4">
                     <CommunityBanner title={community.name} />
                     <div className="flex w-full flex-row">
                         <div className='w-full'></div>
