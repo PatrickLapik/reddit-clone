@@ -12,10 +12,33 @@ const AvatarUploadForm: React.FC = () => {
             avatar: null as File | null,
         });
 
+    const convertFileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                resolve(reader.result as string);
+            };
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const fileDropped = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
+        if (file) {
+            setData('avatar', file);
+            convertFileToBase64(file)
+                .then((base64String) => {
+                    setImagePreview(base64String);
+                })
+                .catch((error) => {
+                    console.error('Error converting file to base64:', error);
+                });
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log(data.avatar);
 
         post(route('settings.profile.update'));
     };
@@ -45,11 +68,7 @@ const AvatarUploadForm: React.FC = () => {
                     name="avatar"
                     id="avatar-upload"
                     accept="image/*"
-                    onChange={(e) => {
-                        if (e.target.files && e.target.files.length > 0) {
-                            setData('avatar', e.target.files[0]);
-                        }
-                    }}
+                    onChange={fileDropped}
                     className="hidden"
                 />
             </div>
@@ -65,7 +84,9 @@ const AvatarUploadForm: React.FC = () => {
                 leave="transition ease-in-out"
                 leaveTo="opacity-0"
             >
-                <p className="text-sm text-green-600 text-center w-full" >Success! New avatar uploaded!</p>
+                <p className="w-full text-center text-sm text-green-600">
+                    Success! New avatar uploaded!
+                </p>
             </Transition>
 
             <PrimaryButton disabled={processing} type="submit">

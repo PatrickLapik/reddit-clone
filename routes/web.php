@@ -27,7 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/settings/account', [AccountController::class, 'update'])->name('settings.account.update');
     Route::delete('/settings/account', [AccountController::class, 'destroy'])->name('settings.account.destroy');
     Route::get('/settings/profile', [ProfileController::class, 'index'])->name('settings.profile');
-    Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
+    Route::middleware(['throttle:upload'])->group(function() {
+        Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
+
+    });
 });
 
 require __DIR__.'/auth.php';

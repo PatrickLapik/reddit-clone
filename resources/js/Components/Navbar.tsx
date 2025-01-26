@@ -43,7 +43,7 @@ function loggedIn(user: User & { avatar?: string}) {
                 <Dropdown.Trigger>
                     <button className="hover:bg-reddit-dark-secondary flex cursor-pointer items-center justify-center rounded-full p-2 text-white">
                         <img
-                            className="z-30 h-10 w-10 rounded-full"
+                            className="z-30 h-10 w-10 rounded-full object-cover"
                             src={user.avatar}
                         />
                     </button>
@@ -52,7 +52,7 @@ function loggedIn(user: User & { avatar?: string}) {
                     <Dropdown.Link href={route('dashboard')}>
                         <div className="flex flex-row items-center space-x-2">
                             <img
-                                className="h-8 w-8 rounded-full"
+                                className="h-8 w-8 rounded-full object-cover"
                                 src={user.avatar}
                             />
                             <div className="flex flex-col">
