@@ -1,3 +1,4 @@
+import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
@@ -5,12 +6,14 @@ interface CommunityNameAndDescriptionProps {
     className?: string;
     setData: (key: string, value: any) => void;
     data: { name: string; description: string };
+    errors: { [key: string]: string }; // Errors type
 }
 
 export default function CommunityNameAndDescription({
     className,
     setData,
     data,
+    errors,
 }: CommunityNameAndDescriptionProps) {
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -39,6 +42,7 @@ export default function CommunityNameAndDescription({
                         onChange={handleChange}
                         value={data.name}
                     />
+                    <InputError message={errors.name} />
                 </div>
                 <div>
                     <InputLabel htmlFor="description" value="Description" />
@@ -50,6 +54,7 @@ export default function CommunityNameAndDescription({
                         onChange={handleChange}
                         value={data.description}
                     />
+                    <InputError message={errors.description} />
                 </div>
             </form>
         </section>

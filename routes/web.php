@@ -27,10 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/settings/account', [AccountController::class, 'update'])->name('settings.account.update');
     Route::delete('/settings/account', [AccountController::class, 'destroy'])->name('settings.account.destroy');
     Route::get('/settings/profile', [ProfileController::class, 'index'])->name('settings.profile');
-    Route::middleware(['throttle:upload'])->group(function() {
+    Route::middleware(['throttle:upload'])->group(function () {
         Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
-
+        Route::post('/community', [CommunityController::class, 'store'])->name('community.create');
     });
+    Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
 });
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

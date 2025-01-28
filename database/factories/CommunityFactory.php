@@ -19,6 +19,7 @@ class CommunityFactory extends Factory
         return [
             'name' => 'funny',
             'description' => 'we like funny hahas',
+            'user_id' => 1,
         ];
     }
 }

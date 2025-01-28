@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
 
-export const convertFileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-        reader.readAsDataURL(file);
-    });
-};
 
 interface FileUploadProps {
     id: string;
@@ -39,6 +31,15 @@ const FileUpload: React.FC<FileUploadProps> & {
     Label: React.FC<FileUploadLabelProps>;
 } = ({ id, onFileSelect, containerClassName = '', children }) => {
     const [preview, setPreview] = useState<string | null>(null);
+
+    const convertFileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file);
+        });
+    };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
@@ -87,15 +88,17 @@ FileUpload.Preview = ({
             className={`object-cover ${className}`}
         />
     ) : (
-        <div
-            className={`flex items-center justify-center bg-gray-200 text-gray-500 ${noImageClassName}`}
-        >
+        <div className={`flex items-center justify-center bg-gray-200 text-gray-500 ${noImageClassName}`}>
             {label}
         </div>
     );
 };
 
-FileUpload.Label = ({ htmlFor, children, className }: FileUploadLabelProps) => {
+FileUpload.Label = ({
+    htmlFor,
+    children,
+    className,
+}: FileUploadLabelProps) => {
     return (
         <label htmlFor={htmlFor} className={`cursor-pointer ${className}`}>
             {children}
@@ -104,3 +107,4 @@ FileUpload.Label = ({ htmlFor, children, className }: FileUploadLabelProps) => {
 };
 
 export default FileUpload;
+

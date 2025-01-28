@@ -24,10 +24,9 @@ class ProfileController extends Controller
     {
         $path = $request->file('avatar')->store('avatars', ['disk' => 'public']);
         $publicPath = Storage::url($path);
-        $url = asset($publicPath);
 
         $user = $request->user();
-        $user->avatar = $url;
+        $user->avatar = $publicPath;
         $user->save();
 
         return back()->with('success', 'New Avatar Uploaded!');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommunityRequest;
 use App\Models\Community;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,9 +22,24 @@ class CommunityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommunityRequest $request)
     {
-        //
+        $community = new Community($request->validated());
+        $community->user()->associate($request->user());
+
+        if($request->file('icon')) {
+            $url = $request->file('icon')->store('community', ['disk' => 'public']);
+            $community->icon = Storage::url($url);
+        }
+
+        if($request->file('banner')) {
+            $url = $request->file('banner')->store('community', ['disk' => 'public']);
+            $community->banner = Storage::url($url);
+        }
+
+        $community->save();
+
+        return redirect("/r/$community->name");
     }
 
     /**
@@ -50,5 +67,10 @@ class CommunityController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function checkUniqueName(CommunityRequest $request)
+    {
+
     }
 }

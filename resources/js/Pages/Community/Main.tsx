@@ -8,6 +8,8 @@ interface Community {
     id: number;
     name: string;
     description: string;
+    icon: string;
+    banner: string;
 }
 
 interface PageProps extends InertiaPageProps {
@@ -25,7 +27,7 @@ export default function Community() {
 
             <div className="flex flex-col items-center justify-center">
                 <div className="flex h-screen w-[1120px] flex-col px-4">
-                    <CommunityBanner title={community.name} />
+                    <CommunityBanner name={community.name} icon={community.icon} banner={community.banner} />
                     <div className="flex w-full flex-row">
                         <div className='w-full'></div>
                         <CommunityDescription title={community}/>
