@@ -16,7 +16,11 @@ export default function CommunityCreateFormModal({
     const { data, setData } = useForm({
         name: '',
         description: '',
+        icon: '',
+        banner: '',
     });
+
+    console.log(data.icon)
 
     const [currentStep, setCurrentStep] = useState(1);
     const [isCreatingOpen, setIsCreatingOpen] = useState(false);
@@ -51,7 +55,7 @@ export default function CommunityCreateFormModal({
                         />
                     )}
                     {currentStep == 2 && (
-                        <CommunityBannerAndIcon setData={setData} data={data} />
+                        <CommunityBannerAndIcon setData={setData} data={data} className='h-72' />
                     )}
                 </div>
                 <div className="mt-6 flex items-end justify-between">
