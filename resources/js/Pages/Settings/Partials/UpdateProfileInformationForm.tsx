@@ -49,7 +49,7 @@ export default function UpdateProfileInformation({
                         id="name"
                         className="mt-1 block w-full bg-reddit-dark-secondary"
                         value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e: any) => setData('name', e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
@@ -66,7 +66,7 @@ export default function UpdateProfileInformation({
                         type="email"
                         className="mt-1 block w-full bg-reddit-dark-secondary"
                         value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e: any) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
                     />

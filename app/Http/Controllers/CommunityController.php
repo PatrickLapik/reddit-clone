@@ -31,7 +31,7 @@ class CommunityController extends Controller
     public function show(Request $request): Response
     {
         $community = Community::where('name', $request->route('community'))->get();
-        return Inertia::render('Community', [
+        return Inertia::render('Community/Main', [
             'community' => $community,
         ]);
     }
