@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserJoinedCommunityController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/community', [CommunityController::class, 'store'])->name('community.create');
     });
     Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
+    Route::get('/u/joined-communities', [UserJoinedCommunityController::class, 'index'])->name('user.joined.communities');
 });
 
 

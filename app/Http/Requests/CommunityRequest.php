@@ -22,7 +22,7 @@ class CommunityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:20|min:3|unique:communities,name',
+            'name' => 'required|max:20|min:3|unique:communities,name|alpha',
             'description' => 'required'
         ];
     }

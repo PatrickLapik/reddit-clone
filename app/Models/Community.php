@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Community extends Model
 {
@@ -18,7 +19,13 @@ class Community extends Model
         'banner' => 'https://www.guardianoffshore.com.au/wp-content/uploads/2015/03/banner-placeholder.jpg'
     ];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function joinedUser(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_joined_communities');
     }
 }

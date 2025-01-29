@@ -13,7 +13,7 @@ export default function NavbarDropdown({ user }: NavbarProps) {
             <Dropdown.Trigger>
                 <button className="hover:bg-reddit-dark-secondary flex cursor-pointer items-center justify-center rounded-full p-2 text-white">
                     <img
-                        className="z-30 h-10 w-10 rounded-full object-cover"
+                        className="z-30 h-10 w-10 aspect-square rounded-full object-cover"
                         src={user.avatar}
                     />
                 </button>

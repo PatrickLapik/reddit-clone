@@ -1,6 +1,12 @@
+import CommunityCreateFormModal from '@/Pages/Community/CommunityCreateFormModal';
+import { usePage } from '@inertiajs/react';
+import Collapse from './Collapse';
 import SideButton from './SideButton';
 
 export default function SideBar() {
+    const joinedCommunities = usePage().props.auth.joinedCommunities;
+    const user = usePage().props.auth.user;
+
     return (
         <nav
             style={{ scrollbarWidth: 'thin', scrollBehavior: 'smooth' }}
@@ -24,6 +30,50 @@ export default function SideBar() {
                     <p>All</p>
                 </SideButton>
                 <Break />
+                {user && (
+                    <>
+                        <Collapse>
+                            <Collapse.Trigger>
+                                <p className="text-lg">Communities</p>
+                            </Collapse.Trigger>
+                            <Collapse.Content>
+                                <CommunityCreateFormModal>
+                                    <div className="flex h-8 w-full flex-row items-center justify-start space-x-2">
+                                        <svg
+                                            fill="currentColor"
+                                            height="20"
+                                            icon-name="add-outline"
+                                            viewBox="0 0 20 20"
+                                            width="20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            data-darkreader-inline-fill=""
+                                        >
+                                            <path d="M19 9.375h-8.375V1h-1.25v8.375H1v1.25h8.375V19h1.25v-8.375H19v-1.25Z"></path>
+                                        </svg>
+                                        <p className="text-gray-300">
+                                            Create Community
+                                        </p>
+                                    </div>
+                                </CommunityCreateFormModal>
+                                {joinedCommunities.map((item) => (
+                                    <Collapse.Link
+                                        className="flex max-h-12 flex-row items-center space-x-2"
+                                        href={route('community', {
+                                            community: item.name,
+                                        })}
+                                    >
+                                        <img
+                                            className="border-reddit-border aspect-square h-8 rounded-full border"
+                                            src={item.icon}
+                                        />
+                                        <p className="h-full">{item.name}</p>
+                                    </Collapse.Link>
+                                ))}
+                            </Collapse.Content>
+                        </Collapse>
+                        <Break />
+                    </>
+                )}
             </div>
             <p className="text-reddit-border text-center text-xs">
                 PLS DON'T SUE ME
@@ -35,7 +85,7 @@ export default function SideBar() {
 // Icons
 
 function Break() {
-    return <hr className="border-reddit-border-secondary my-6" />;
+    return <hr className="border-reddit-border-secondary my-3" />;
 }
 
 function Home() {

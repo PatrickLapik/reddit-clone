@@ -27,17 +27,19 @@ class CommunityController extends Controller
         $community = new Community($request->validated());
         $community->user()->associate($request->user());
 
-        if($request->file('icon')) {
+        if ($request->file('icon')) {
             $url = $request->file('icon')->store('community', ['disk' => 'public']);
             $community->icon = Storage::url($url);
         }
 
-        if($request->file('banner')) {
+        if ($request->file('banner')) {
             $url = $request->file('banner')->store('community', ['disk' => 'public']);
             $community->banner = Storage::url($url);
         }
 
         $community->save();
+
+        $community->joinedUser()->attach($request->user());
 
         return redirect("/r/$community->name");
     }
@@ -48,6 +50,11 @@ class CommunityController extends Controller
     public function show(Request $request): Response
     {
         $community = Community::where('name', $request->route('community'))->get();
+
+        if ($community->isEmpty()) {
+            return Inertia::render('Welcome');
+        }
+
         return Inertia::render('Community/Main', [
             'community' => $community,
         ]);
@@ -69,8 +76,5 @@ class CommunityController extends Controller
         //
     }
 
-    public function checkUniqueName(CommunityRequest $request)
-    {
-
-    }
+    public function checkUniqueName(CommunityRequest $request) {}
 }

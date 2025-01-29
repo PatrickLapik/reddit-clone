@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/DefaultLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
     return (

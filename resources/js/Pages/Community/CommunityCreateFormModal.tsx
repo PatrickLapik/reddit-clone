@@ -77,9 +77,9 @@ export default function CommunityCreateFormModal({
 
     return (
         <>
-            <NavButton onClick={() => setIsCreatingOpen(true)}>
+            <button className='w-full flex items-center justify-start cursor-pointer hover:bg-reddit-dark-secondary rounded-xl max-h-12 px-4 py-2.5' onClick={() => setIsCreatingOpen(true)}>
                 {children}
-            </NavButton>
+            </button>
             <Modal
                 show={isCreatingOpen}
                 onClose={() => setIsCreatingOpen(false)}
