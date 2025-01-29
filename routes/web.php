@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
     Route::post('/community/join', [UserJoinedCommunityController::class, 'store'])->name('community.join');
+    Route::delete('/community/leave/{id}', [UserJoinedCommunityController::class, 'destroy'])->name('community.leave');
 });
 
 

@@ -7,13 +7,21 @@ export default function CommunityBanner() {
     const { community } = useCommunity();
     const isJoined = usePage<UserProps>().props.isJoined;
 
-    const { post, setData } = useForm({
+    const {
+        post,
+        delete: destroy,
+        setData,
+    } = useForm({
         community_id: community.id,
     });
 
-    const handleJoin = () => {
+    const handleJoinOrLeave = () => {
         setData('community_id', community.id);
-        post(route('community.join'));
+        if (!isJoined) {
+            post(route('community.join'));
+            return;
+        }
+        destroy(route('community.leave', { id: community.id }));
     };
     return (
         <>
@@ -31,7 +39,7 @@ export default function CommunityBanner() {
                     s/{community.name}
                 </h1>
                 <div className="mt-6 flex justify-end">
-                    <PrimaryButton onClick={handleJoin} disabled={isJoined}>
+                    <PrimaryButton className={`${isJoined ? 'opacity-25' : ''}`} onClick={handleJoinOrLeave}>
                         Join
                     </PrimaryButton>
                 </div>
