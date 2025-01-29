@@ -1,11 +1,12 @@
+import { UserProps } from '@/Contexts/UserContext';
 import CommunityCreateFormModal from '@/Pages/Community/CommunityCreateFormModal';
 import { usePage } from '@inertiajs/react';
 import Collapse from './Collapse';
 import SideButton from './SideButton';
 
 export default function SideBar() {
-    const joinedCommunities = usePage().props.auth.joinedCommunities;
-    const user = usePage().props.auth.user;
+    const joinedCommunities = usePage<UserProps>().props.auth.joinedCommunities;
+    const user = usePage<UserProps>().props.auth.user;
 
     return (
         <nav

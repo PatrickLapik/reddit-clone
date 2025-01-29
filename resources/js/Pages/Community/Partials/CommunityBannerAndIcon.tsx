@@ -62,7 +62,7 @@ export default function CommunityBannerAndIcon({
                 </FileUpload>
                 {data.name && (
                     <div className="absolute right-6 bottom-42 w-44 font-semibold text-white">
-                        r/{data.name}
+                        s/{data.name}
                     </div>
                 )}
             </form>

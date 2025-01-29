@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserJoinedCommunityRequest;
 use Illuminate\Http\Request;
 
 class UserJoinedCommunityController extends Controller
@@ -17,9 +18,9 @@ class UserJoinedCommunityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserJoinedCommunityRequest $request)
     {
-        //
+        $request->user()->joinedCommunity()->attach($request->input('community_id'));
     }
 
     /**

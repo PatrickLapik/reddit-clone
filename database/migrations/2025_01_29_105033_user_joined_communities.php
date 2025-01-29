@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('user_joined_communities', function (Blueprint $table) {
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Community::class)->constrained()->cascadeOnDelete();
+
+            $table->unique(['user_id', 'community_id']);
         });
     }
 

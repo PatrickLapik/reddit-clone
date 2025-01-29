@@ -41,7 +41,7 @@ class CommunityController extends Controller
 
         $community->joinedUser()->attach($request->user());
 
-        return redirect("/r/$community->name");
+        return redirect(route('community', ['community' => $community->name]));
     }
 
     /**
@@ -49,14 +49,18 @@ class CommunityController extends Controller
      */
     public function show(Request $request): Response
     {
-        $community = Community::where('name', $request->route('community'))->get();
+        $community = Community::where('name', $request->route('community'))->first();
 
-        if ($community->isEmpty()) {
+        if ($community == null) {
             return Inertia::render('Welcome');
         }
 
+        $user = $request->user();
+        $isJoined = $user ? $user->joinedCommunity()->where('community_id', $community->id)->exists() : false;
+
         return Inertia::render('Community/Main', [
             'community' => $community,
+            'isJoined' => $isJoined,
         ]);
     }
 

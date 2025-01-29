@@ -1,11 +1,7 @@
-interface Community {
-    name: string;
-    description: string;
-    created_at: string;
-}
+import { useCommunity } from "@/Contexts/CommunityContext";
 
-export default function CommunityDescription({ ...props }) {
-    const community: Community = props.title;
+export default function CommunityDescription() {
+    const { community } = useCommunity()
     const formattedDate = new Date(community.created_at).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',

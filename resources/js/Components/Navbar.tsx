@@ -1,27 +1,28 @@
-import CommunityCreateFormModal from '@/Pages/Community/CommunityCreateFormModal';
-import { User } from '@/types';
+import { UserProps, UserProvider } from '@/Contexts/UserContext';
 import { Link, usePage } from '@inertiajs/react';
 import ApplicationLogo from './ApplicationLogo';
 import NavbarDropdown from './NavbarDropdown';
 import SearchBar from './SearchBar';
 
 export default function Navbar() {
-    const user = usePage().props.auth.user as User & { avatar?: string };
+    const user = usePage<UserProps>().props.auth.user;
     return (
         <nav className="border-reddit-border bg-reddit-dark sticky top-0 z-40 border-b px-4 py-1.5">
             <div className="flex flex-row items-center justify-between">
                 <ApplicationLogo />
                 <SearchBar />
-                {user ? loggedIn(user) : guest()}
+                {user ? loggedIn() : guest()}
             </div>
         </nav>
     );
 }
 
-function loggedIn(user: User & { avatar?: string }) {
+function loggedIn() {
     return (
         <div className="flex flex-row space-x-2">
-            <NavbarDropdown user={user} />
+            <UserProvider>
+                <NavbarDropdown />
+            </UserProvider>
         </div>
     );
 }

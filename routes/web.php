@@ -17,7 +17,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/r/{community}', [CommunityController::class, 'show'])->name('community');
+Route::get('/s/{community}', [CommunityController::class, 'show'])->name('community');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -30,10 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/profile', [ProfileController::class, 'index'])->name('settings.profile');
     Route::middleware(['throttle:upload'])->group(function () {
         Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
-        Route::post('/community', [CommunityController::class, 'store'])->name('community.create');
+        Route::post('/community/create', [CommunityController::class, 'store'])->name('community.create');
     });
     Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
-    Route::get('/u/joined-communities', [UserJoinedCommunityController::class, 'index'])->name('user.joined.communities');
+    Route::post('/community/join', [UserJoinedCommunityController::class, 'store'])->name('community.join');
 });
 
 

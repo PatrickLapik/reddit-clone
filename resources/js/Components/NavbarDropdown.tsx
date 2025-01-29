@@ -1,13 +1,12 @@
 import { User } from '@/types';
 import { useForm } from '@inertiajs/react';
 import Dropdown from './Dropdown';
+import { useUser } from '@/Contexts/UserContext';
 
-interface NavbarProps {
-    user: User & { avatar?: string };
-}
 
-export default function NavbarDropdown({ user }: NavbarProps) {
+export default function NavbarDropdown() {
     const { post } = useForm();
+    const { user } = useUser();
     return (
         <Dropdown>
             <Dropdown.Trigger>
