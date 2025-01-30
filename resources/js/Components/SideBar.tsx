@@ -3,6 +3,7 @@ import CommunityCreateFormModal from '@/Pages/Community/CommunityCreateFormModal
 import { usePage } from '@inertiajs/react';
 import Collapse from './Collapse';
 import SideButton from './SideButton';
+import Break from './Break';
 
 export default function SideBar() {
     const joinedCommunities = usePage<UserProps>().props.auth.joinedCommunities;
@@ -11,9 +12,9 @@ export default function SideBar() {
     return (
         <nav
             style={{ scrollbarWidth: 'thin', scrollBehavior: 'smooth' }}
-            className="bg-reddit-dark border-r-reddit-border sticky top-[69px] flex h-[calc(100vh-69px)] min-w-72 flex-col justify-between overflow-auto border-r p-4 text-white"
+            className="bg-reddit-dark border-r-reddit-border fixed top-[69px] flex h-[calc(100vh-69px)] min-w-72 flex-col justify-between overflow-auto border-r p-4 text-white"
         >
-            <div className="flex flex-col">
+            <div className="flex flex-col max-h-full overflow-auto">
                 <SideButton href="/">
                     <Home />
                     <p>Home</p>
@@ -59,7 +60,7 @@ export default function SideBar() {
                                 {joinedCommunities.map((item) => (
                                     <Collapse.Link
                                         className="flex max-h-12 flex-row items-center space-x-2"
-                                        href={route('community', {
+                                        href={route('community.show', {
                                             community: item.name,
                                         })}
                                     >
@@ -72,7 +73,6 @@ export default function SideBar() {
                                 ))}
                             </Collapse.Content>
                         </Collapse>
-                        <Break />
                     </>
                 )}
             </div>
@@ -85,9 +85,6 @@ export default function SideBar() {
 
 // Icons
 
-function Break() {
-    return <hr className="border-reddit-border-secondary my-3" />;
-}
 
 function Home() {
     return (

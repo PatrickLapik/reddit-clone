@@ -1,0 +1,38 @@
+import Break from '@/Components/Break';
+import PostCard from '@/Components/PostCard';
+import { PostProvider } from '@/Contexts/PostContext';
+import { UserProps } from '@/Contexts/UserContext';
+import AuthenticatedLayout from '@/Layouts/DefaultLayout';
+import { Head, usePage } from '@inertiajs/react';
+
+export default function Dashboard() {
+    const { profile } = usePage<UserProps>().props;
+    return (
+        <AuthenticatedLayout>
+            <PostProvider>
+                <Head title={'u/' + profile?.name} />
+
+                <div className="flex flex-row items-center space-x-2 py-12">
+                    <img className="h-20 rounded-full" src={profile?.avatar} />
+                    <div className="text-2xl font-semibold">{'u/' + profile?.name}</div>
+                </div>
+                <div>
+                    <Break />
+                    {profile?.posts.map((post) => (
+                        <>
+                            <PostCard
+                                href={route('post.show', {
+                                    name: profile.name,
+                                    post: post.id,
+                                })}
+                                post={post}
+                                author={profile}
+                            />
+                            <Break />
+                        </>
+                    ))}
+                </div>
+            </PostProvider>
+        </AuthenticatedLayout>
+    );
+}

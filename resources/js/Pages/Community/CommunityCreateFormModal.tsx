@@ -43,7 +43,7 @@ export default function CommunityCreateFormModal({
     };
 
     const handleSubmit = () => {
-        post(route('community.create'), {
+        post(route('community.store'), {
             onFinish: () => handleAfterSubmit(),
         });
     };

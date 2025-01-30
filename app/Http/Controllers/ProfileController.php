@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -35,9 +36,19 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $name)
     {
-        //
+        $profile = User::where('name', $name)
+            ->select('id', 'name', 'avatar')
+            ->with(['posts' => function ($query) {
+                $query->select('id', 'user_id', 'title', 'body', 'created_at')
+                    ->latest();
+            }])
+            ->firstOrFail();
+
+        return Inertia::render('Profile', [
+            'profile' => $profile,
+        ]);
     }
 
     /**

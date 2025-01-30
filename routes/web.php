@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserJoinedCommunityController;
 use Illuminate\Foundation\Application;
@@ -17,24 +18,26 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/s/{community}', [CommunityController::class, 'show'])->name('community');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/s/{community}', [CommunityController::class, 'show'])->name('community.show');
+Route::get('/u/{name}', [ProfileController::class, 'show'])->name('profile');
+Route::get('/u/{name}/post/{post}', [PostController::class, 'show'])->name('post.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings/account', [AccountController::class, 'edit'])->name('settings.account');
     Route::patch('/settings/account', [AccountController::class, 'update'])->name('settings.account.update');
     Route::delete('/settings/account', [AccountController::class, 'destroy'])->name('settings.account.destroy');
     Route::get('/settings/profile', [ProfileController::class, 'index'])->name('settings.profile');
+
     Route::middleware(['throttle:upload'])->group(function () {
         Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
-        Route::post('/community/create', [CommunityController::class, 'store'])->name('community.create');
+        Route::post('/community/create', [CommunityController::class, 'store'])->name('community.store');
     });
     Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
     Route::post('/community/join', [UserJoinedCommunityController::class, 'store'])->name('community.join');
     Route::delete('/community/leave/{id}', [UserJoinedCommunityController::class, 'destroy'])->name('community.leave');
+
+    Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 });
 
 

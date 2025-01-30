@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import ApplicationLogo from './ApplicationLogo';
 import NavbarDropdown from './NavbarDropdown';
 import SearchBar from './SearchBar';
+import SecondaryButton from './SecondaryButton';
 
 export default function Navbar() {
     const user = usePage<UserProps>().props.auth.user;
@@ -21,6 +22,22 @@ function loggedIn() {
     return (
         <div className="flex flex-row space-x-2">
             <UserProvider>
+                <SecondaryButton>
+                    <Link href={route('post.create')} className="flex flex-row items-center space-x-2">
+                        <svg
+                            fill="currentColor"
+                            height="20"
+                            icon-name="add-outline"
+                            viewBox="0 0 20 20"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            data-darkreader-inline-fill=""
+                        >
+                            <path d="M19 9.375h-8.375V1h-1.25v8.375H1v1.25h8.375V19h1.25v-8.375H19v-1.25Z"></path>
+                        </svg>
+                        <div>Create</div>
+                    </Link>
+                </SecondaryButton>
                 <NavbarDropdown />
             </UserProvider>
         </div>

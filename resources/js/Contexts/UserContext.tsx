@@ -2,6 +2,7 @@ import { PageProps, User as UserType } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { Community } from './CommunityContext';
+import { Post } from './PostContext';
 
 export interface User extends UserType {
     avatar: string;
@@ -11,9 +12,18 @@ interface UserContextType {
     user: User;
 }
 
+interface Profile {
+    id: number;
+    name: string;
+    avatar: string;
+    posts: Post[];
+}
+
+
 export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
-    isJoined: boolean;
+    isJoined?: boolean;
+    profile: Profile;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

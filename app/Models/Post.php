@@ -16,6 +16,10 @@ class Post extends Model
         'body'
     ];
 
+    protected $attributes = [
+        'body' => '',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

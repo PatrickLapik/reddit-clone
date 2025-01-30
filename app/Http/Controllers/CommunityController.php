@@ -41,7 +41,7 @@ class CommunityController extends Controller
 
         $community->joinedUsers()->attach($request->user());
 
-        return redirect(route('community', ['community' => $community->name]));
+        return redirect(route('community.show', ['community' => $community->name]));
     }
 
     /**

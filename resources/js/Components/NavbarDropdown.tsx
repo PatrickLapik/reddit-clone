@@ -1,8 +1,6 @@
-import { User } from '@/types';
+import { useUser } from '@/Contexts/UserContext';
 import { useForm } from '@inertiajs/react';
 import Dropdown from './Dropdown';
-import { useUser } from '@/Contexts/UserContext';
-
 
 export default function NavbarDropdown() {
     const { post } = useForm();
@@ -12,13 +10,13 @@ export default function NavbarDropdown() {
             <Dropdown.Trigger>
                 <button className="hover:bg-reddit-dark-secondary flex cursor-pointer items-center justify-center rounded-full p-2 text-white">
                     <img
-                        className="z-30 h-10 w-10 aspect-square rounded-full object-cover"
+                        className="z-30 aspect-square h-10 w-10 rounded-full object-cover"
                         src={user.avatar}
                     />
                 </button>
             </Dropdown.Trigger>
             <Dropdown.Content>
-                <Dropdown.Link href={route('dashboard')}>
+                <Dropdown.Link href={route('profile', { name: user.name })}>
                     <div className="flex flex-row items-center space-x-2">
                         <img
                             className="h-8 w-8 rounded-full object-cover"
