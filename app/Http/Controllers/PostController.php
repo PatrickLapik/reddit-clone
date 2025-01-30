@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Community;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -33,6 +34,18 @@ class PostController extends Controller
     {
         $post = new Post($request->validated());
         $post->user()->associate($request->user());
+
+        $communityId = $request->input('community_id');
+
+        if ($communityId) {
+            $post->community()->associate($communityId);
+
+            $post->save();
+
+            $community = Community::findOrFail($communityId)->select('name')->first();
+
+            return redirect((route('community.show', ['community' => $community->name])));
+        }
 
         $post->save();
 
