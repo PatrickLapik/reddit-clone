@@ -22,11 +22,7 @@ class UserJoinedCommunityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'community_id' => ['required', 'exists:communities,id', function ($attribute, $value, $fail) {
-                if ($this->user()->joinedCommunity()->where('community_id', $value)->exists()) {
-                    $fail('You are already joined in this community');
-                }
-            }]
+            'community_id' => ['required', 'integer', 'exists:communities,id'],
         ];
     }
 }

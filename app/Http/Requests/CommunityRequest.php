@@ -23,7 +23,7 @@ class CommunityRequest extends FormRequest
     {
         return [
             'name' => 'required|max:20|min:3|unique:communities,name|alpha',
-            'description' => 'required'
+            'description' => 'required|regex:/(^[\pL0-9 ]+$)/u'
         ];
     }
 }
