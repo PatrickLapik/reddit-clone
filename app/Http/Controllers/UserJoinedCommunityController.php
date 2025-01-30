@@ -22,7 +22,7 @@ class UserJoinedCommunityController extends Controller
      */
     public function store(UserJoinedCommunityRequest $request)
     {
-        $request->user()->joinedCommunity()->attach($request->input('community_id'));
+        $request->user()->joinedCommunities()->attach($request->input('community_id'));
     }
 
     /**
@@ -48,6 +48,6 @@ class UserJoinedCommunityController extends Controller
     {
         $community = Community::findOrFail($id);
         Gate::authorize('leave.community', $community);
-        $request->user()->joinedCommunity()->detach($community->id);
+        $request->user()->joinedCommunities()->detach($community->id);
     }
 }

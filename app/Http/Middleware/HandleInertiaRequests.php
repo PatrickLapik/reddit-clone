@@ -33,7 +33,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                'joinedCommunities' => $request->user() ? $request->user()->joinedCommunity()->select('name', 'icon')->get()->makeHidden(['pivot']) : collect(),
+                'joinedCommunities' => $request->user() ? $request->user()->joinedCommunities()->select('name', 'icon')->get()->makeHidden(['pivot']) : collect(),
             ],
         ];
     }

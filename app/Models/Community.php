@@ -24,7 +24,7 @@ class Community extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function joinedUser(): BelongsToMany
+    public function joinedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_joined_communities');
     }

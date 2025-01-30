@@ -39,7 +39,7 @@ class CommunityController extends Controller
 
         $community->save();
 
-        $community->joinedUser()->attach($request->user());
+        $community->joinedUsers()->attach($request->user());
 
         return redirect(route('community', ['community' => $community->name]));
     }
@@ -56,7 +56,7 @@ class CommunityController extends Controller
         }
 
         $user = $request->user();
-        $isJoined = $user ? $user->joinedCommunity()->where('community_id', $community->id)->exists() : false;
+        $isJoined = $user ? $user->joinedCommunities()->where('community_id', $community->id)->exists() : false;
 
         return Inertia::render('Community/Main', [
             'community' => $community,

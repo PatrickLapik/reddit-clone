@@ -53,13 +53,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function community(): HasMany
+    public function communities(): HasMany
     {
         return $this->hasMany(Community::class);
     }
 
-    public function joinedCommunity(): BelongsToMany
+    public function joinedCommunities(): BelongsToMany
     {
         return $this->belongsToMany(Community::class, 'user_joined_communities');
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
     }
 }
