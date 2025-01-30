@@ -52,7 +52,7 @@ export default forwardRef(function TextInput(
         <input
             {...(props as InputHTMLAttributes<HTMLInputElement>)}
             type={type}
-            className={commonClasses}
+            className={`hover:brightness-125 ${commonClasses}`}
             ref={localRef as React.RefObject<HTMLInputElement>}
         />
     );

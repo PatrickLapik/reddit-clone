@@ -22,7 +22,7 @@ interface Profile {
 
 export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
-    isJoined?: boolean;
+    isJoined: boolean;
     profile: Profile;
 }
 

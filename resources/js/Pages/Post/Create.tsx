@@ -1,14 +1,19 @@
+import CommunitySelector from '@/Components/CommunitySelector';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import { UserProps } from '@/Contexts/UserContext';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 
 export default function CreatePost() {
     const { post, setData } = useForm({
         title: '',
         body: '',
+        community_id: 0,
     });
+
+    const { joinedCommunities } = usePage<UserProps>().props.auth;
 
     const handleSubmit = () => {
         post(route('post.create'));
@@ -17,6 +22,10 @@ export default function CreatePost() {
     return (
         <DefaultLayout header="Create post">
             <form className="mt-6 flex flex-col space-y-8">
+                <CommunitySelector
+                    communities={joinedCommunities}
+                    onSelect={(id) => setData('community_id', id)}
+                />
                 <div>
                     <InputLabel htmlFor="title" className="text-lg">
                         <span>Title</span>
