@@ -1,6 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { createContext, PropsWithChildren, useContext } from 'react';
-import { UserProps } from './UserContext';
+import { User, UserProps } from './UserContext';
+import { Community } from './CommunityContext';
 
 interface PostContextType {
     post: Post;
@@ -10,8 +11,10 @@ interface PostContextType {
 export interface Post {
     id: number;
     title: string;
-    body: string;
+    body?: string;
     created_at: string;
+    community?: Community;
+    user: User;
 }
 
 export interface Author {
@@ -22,7 +25,6 @@ export interface Author {
 
 export interface PostProps extends UserProps {
     post: Post;
-    author: Author;
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
@@ -44,10 +46,10 @@ export const PostProvider = ({ children }: PropsWithChildren) => {
         return null;
     }
 
-    if (props.post && props.author) {
+    if (props.post && props.post.user) {
         return (
             <PostContext.Provider
-                value={{ post: props.post, author: props.author }}
+                value={{ post: props.post, author: props.post.user }}
             >
                 {children}
             </PostContext.Provider>

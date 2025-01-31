@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Community::class)->nullable()->constrained()->nullOnDelete();
             $table->string('title');
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->timestamps();
         });
     }

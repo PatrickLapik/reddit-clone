@@ -17,10 +17,12 @@ export default function PostCard({ author, post, href }: PostCardProps) {
             <div className="text-wrap">
                 <PostAuthorProps author={author} post={post} />
                 <div className="mt-3 text-xl font-semibold">{post.title}</div>
-                <p className="text-balance">
-                    {post.body.substring(0, 100)}
-                    {post.body.length > 100 ? '...' : ''}
-                </p>
+                {post.body && (
+                    <p className="text-balance">
+                        {post.body.substring(0, 100)}
+                        {post.body.length > 100 ? '...' : ''}
+                    </p>
+                )}
             </div>
         </Link>
     );

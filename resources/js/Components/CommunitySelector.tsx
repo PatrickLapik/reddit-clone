@@ -7,12 +7,12 @@ import Dropdown from './Dropdown';
 
 interface CommunitySelectorProps {
     communities: Community[];
-    onSelect: (id:number) => void;
+    onSelect: (id: number) => void;
 }
 
 export default function CommunitySelector({
     communities,
-    onSelect
+    onSelect,
 }: CommunitySelectorProps) {
     const { user } = usePage<UserProps>().props.auth;
     const [selectedField, setSelectedField] = useState<
@@ -33,11 +33,11 @@ export default function CommunitySelector({
 
     return (
         <Dropdown>
-            <div className="max-w-64">
+            <div className="w-fit min-w-48">
                 <Dropdown.Trigger>
-                    <div className="bg-reddit-dark-secondary flex max-w-64 cursor-pointer items-center justify-between space-x-2 rounded-xl px-2.5 py-3 text-gray-300 hover:brightness-125">
+                    <div className="bg-reddit-dark-secondary flex cursor-pointer items-center justify-between space-x-2 rounded-xl px-2.5 py-3 text-gray-300 hover:brightness-125">
                         {selectedField && (
-                            <div className="flex flex-row items-center space-x-2">
+                            <div className="flex flex-row items-center space-x-2 w-full">
                                 <img
                                     className="aspect-square h-8 rounded-full object-cover"
                                     src={
@@ -46,7 +46,19 @@ export default function CommunitySelector({
                                             : selectedField.icon
                                     }
                                 />
-                                <div>{selectedField.name}</div>
+                                <div className='flex flex-row items-center justify-between w-full'>
+                                    <div>{selectedField.name}</div>
+                                    <svg
+                                        fill="currentColor"
+                                        height="20"
+                                        icon-name="caret-down-outline"
+                                        viewBox="0 0 20 20"
+                                        width="20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path>
+                                    </svg>
+                                </div>
                             </div>
                         )}
                         {!selectedField && (
@@ -94,7 +106,9 @@ const UserSelect = ({ onClick }: ButtonProps) => {
                 src={user.avatar}
             />
             <div className="flex w-full flex-col space-y-1">
-                <div className="text-left text-sm text-gray-200 hover:text-white">{'u/' + user.name}</div>
+                <div className="text-left text-sm text-gray-200 hover:text-white">
+                    {'u/' + user.name}
+                </div>
                 <div className="text-left text-xs text-gray-300">
                     {user.name}
                 </div>
@@ -120,7 +134,9 @@ const CommunitySelect = ({ onClick, community }: CommunitySelectProps) => {
                 src={community.icon}
             />
             <div className="flex w-full flex-col space-y-1">
-                <div className="text-left text-sm text-gray-200 hover:text-white">{'s/' + community.name}</div>
+                <div className="text-left text-sm text-gray-200 hover:text-white">
+                    {'s/' + community.name}
+                </div>
                 <div className="text-xs text-gray-300">members 69</div>
             </div>
         </button>

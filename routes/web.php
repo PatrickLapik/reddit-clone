@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserJoinedCommunityController;
+use App\Http\Controllers\UserPostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,7 +22,10 @@ Route::get('/', function () {
 
 Route::get('/s/{community}', [CommunityController::class, 'show'])->name('community.show');
 Route::get('/u/{name}', [ProfileController::class, 'show'])->name('profile');
-Route::get('/u/{name}/post/{post}', [PostController::class, 'show'])->name('post.show');
+Route::get('/post/show/{post}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('/s/{community}/post/{post}', [CommunityPostController::class, 'show'])->name('community.post.show');
+Route::get('/u/{user}/post/{post}', [UserPostController::class, 'show'])->name('user.post.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings/account', [AccountController::class, 'edit'])->name('settings.account');

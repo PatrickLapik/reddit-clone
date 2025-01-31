@@ -24,6 +24,7 @@ export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
     isJoined: boolean;
     profile: Profile;
+    community: Community;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

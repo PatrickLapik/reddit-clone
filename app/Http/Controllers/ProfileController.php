@@ -41,8 +41,8 @@ class ProfileController extends Controller
         $profile = User::where('name', $name)
             ->select('id', 'name', 'avatar')
             ->with(['posts' => function ($query) {
-                $query->select('id', 'user_id', 'title', 'body', 'created_at')
-                    ->latest();
+                $query->select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
+                    ->latest()->with(['community:id,name,icon']);
             }])
             ->firstOrFail();
 

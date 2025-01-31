@@ -49,7 +49,7 @@ class CommunityController extends Controller
      */
     public function show(Request $request): Response
     {
-        $community = Community::where('name', $request->route('community'))->first();
+        $community = Community::where('name', $request->route('community'))->with(['posts:id,community_id,user_id,title,body,created_at', 'posts.user:name,id,avatar'])->first();
 
         if ($community == null) {
             return Inertia::render('Welcome');

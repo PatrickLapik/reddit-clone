@@ -55,14 +55,19 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Post $post)
     {
-        $post = Post::with(['user:id,name,avatar'])->findOrFail($request->route('post'));
+        if ($post->community) {
+            return redirect(route('community.post.show', [
+                'community' => $post->community->name,
+                'post' => $post->id,
+            ]));
+        }
 
-        return Inertia::render('Post/View', [
-            'post' => $post->only('id', 'title', 'body', 'created_at'),
-            'author' => $post->user,
-        ]);
+        return redirect(route('user.post.show', [
+            'user' => $post->user->name,
+            'post' => $post->id,
+        ]));
     }
 
     /**

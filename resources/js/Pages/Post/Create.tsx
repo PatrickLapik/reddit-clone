@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { UserProps } from '@/Contexts/UserContext';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { useForm, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 
 export default function CreatePost() {
     const { post, setData } = useForm({
@@ -21,6 +21,7 @@ export default function CreatePost() {
 
     return (
         <DefaultLayout header="Create post">
+            <Head title='Create post' />
             <form className="mt-6 flex flex-col space-y-8">
                 <CommunitySelector
                     communities={joinedCommunities}

@@ -2,6 +2,7 @@ import { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { PropsWithChildren, useContext } from "react";
 import { createContext } from "react";
+import { Post } from "./PostContext";
 
 export interface Community {
     id: number;
@@ -9,6 +10,7 @@ export interface Community {
     description: string;
     icon: string;
     banner: string;
+    posts: Post[];
     created_at:string;
     user_id:number;
 }
