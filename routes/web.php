@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserJoinedCommunityController;
 use App\Http\Controllers\UserPostController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
     Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+
+    Route::post('/vote', [VoteController::class, 'store'])->name('vote.store');
+    Route::patch('/vote', [VoteController::class, 'update'])->name('vote.update');
+    Route::delete('/vote/delete/{vote}', [VoteController::class, 'destroy'])->name('vote.destroy');
 });
 
 

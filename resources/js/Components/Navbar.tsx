@@ -1,7 +1,8 @@
 import { UserProps, UserProvider } from '@/Contexts/UserContext';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import ApplicationLogo from './ApplicationLogo';
 import NavbarDropdown from './NavbarDropdown';
+import PrimaryButton from './PrimaryButton';
 import SearchBar from './SearchBar';
 import SecondaryButton from './SecondaryButton';
 
@@ -19,11 +20,16 @@ export default function Navbar() {
 }
 
 function loggedIn() {
+    const { post } = useForm({
+        vote: -1,
+        voteable_type: 'comment',
+        voteable_id: 1
+    });
     return (
         <div className="flex flex-row space-x-2">
             <UserProvider>
-                <SecondaryButton>
-                    <Link href={route('post.create')} className="flex flex-row items-center space-x-2">
+                <Link href={route('post.create')}>
+                    <SecondaryButton className="flex h-full w-full flex-row items-center space-x-2">
                         <svg
                             fill="currentColor"
                             height="20"
@@ -36,8 +42,9 @@ function loggedIn() {
                             <path d="M19 9.375h-8.375V1h-1.25v8.375H1v1.25h8.375V19h1.25v-8.375H19v-1.25Z"></path>
                         </svg>
                         <div>Create</div>
-                    </Link>
-                </SecondaryButton>
+                    </SecondaryButton>
+                </Link>
+                <PrimaryButton onClick={() => post(route('vote.store'))}> vote</PrimaryButton>
                 <NavbarDropdown />
             </UserProvider>
         </div>
