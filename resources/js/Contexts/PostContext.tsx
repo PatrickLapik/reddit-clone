@@ -1,7 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { createContext, PropsWithChildren, useContext } from 'react';
-import { User, UserProps } from './UserContext';
 import { Community } from './CommunityContext';
+import { User, UserProps } from './UserContext';
 
 interface PostContextType {
     post: Post;
@@ -15,6 +15,14 @@ export interface Post {
     created_at: string;
     community?: Community;
     user: User;
+    votes_sum_value?: number;
+    votes?: Vote[];
+}
+
+export interface Vote {
+    id: number;
+    voteable_id: number;
+    value: -1 | 1 | undefined;
 }
 
 export interface Author {

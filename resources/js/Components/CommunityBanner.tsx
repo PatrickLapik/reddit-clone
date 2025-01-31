@@ -18,10 +18,14 @@ export default function CommunityBanner() {
     const handleJoinOrLeave = () => {
         setData('community_id', community.id);
         if (!isJoined) {
-            post(route('community.join'));
+            post(route('community.join'), {
+                preserveScroll: true,
+            });
             return;
         }
-        destroy(route('community.leave', { id: community.id }));
+        destroy(route('community.leave', { id: community.id }), {
+            preserveScroll: true,
+        });
     };
     return (
         <>
@@ -39,7 +43,10 @@ export default function CommunityBanner() {
                     s/{community.name}
                 </h1>
                 <div className="mt-6 flex justify-end">
-                    <PrimaryButton className={`${isJoined ? 'opacity-25' : ''}`} onClick={handleJoinOrLeave}>
+                    <PrimaryButton
+                        className={`${isJoined ? 'opacity-25' : ''}`}
+                        onClick={handleJoinOrLeave}
+                    >
                         Join
                     </PrimaryButton>
                 </div>

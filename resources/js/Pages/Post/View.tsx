@@ -1,5 +1,6 @@
 import Break from '@/Components/Break';
 import { PostAuthorContext } from '@/Components/PostAuthor';
+import Vote from '@/Components/Vote';
 import { PostProps, PostProvider } from '@/Contexts/PostContext';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { usePage } from '@inertiajs/react';
@@ -21,6 +22,7 @@ export default function PostView() {
                         </div>
                         <div>{post.body}</div>
                     </div>
+                    <Vote postData={post}/>
                     <Break />
                 </div>
             </PostProvider>

@@ -15,13 +15,13 @@ class Vote extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'vote',
+        'value',
     ];
 
     protected function casts(): array
     {
         return [
-            'vote' => 'integer',
+            'value' => 'integer',
         ];
     }
 

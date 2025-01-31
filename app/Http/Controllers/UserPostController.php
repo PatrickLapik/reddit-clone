@@ -27,9 +27,19 @@ class UserPostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user, Post $post)
+    public function show(string $user, string $post)
     {
-        $post = $post->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')->with(['community:id,name,icon', 'user:id,name,avatar'])->first();
+        /*dd();*/
+        $userId = auth()->guard()->id();
+        $post = Post::where('id', $post)->select('id', 'user_id', 'title', 'body', 'created_at')
+            ->with([
+                'user:id,name,avatar',
+                'votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->select('id', 'voteable_id', 'value');
+                }
+            ])
+            ->withSum('votes', 'value')
+            ->first();
 
         return Inertia::render('Post/View', [
             'post' => $post,

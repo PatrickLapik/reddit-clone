@@ -22,7 +22,7 @@ class StoreVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vote' => 'required|in:1,-1',
+            'value' => 'required|in:1,-1',
             'voteable_type' => 'required|in:post,comment',
             'voteable_id' => 'required'
         ];

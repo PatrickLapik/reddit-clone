@@ -63,6 +63,7 @@ export default function SideBar() {
                                         href={route('community.show', {
                                             community: item.name,
                                         })}
+                                        key={item.id}
                                     >
                                         <img
                                             className="border-reddit-border aspect-square h-8 rounded-full border"

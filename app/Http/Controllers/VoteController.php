@@ -62,9 +62,9 @@ class VoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVoteRequest $request, Vote $vote)
+    public function update(Vote $vote, UpdateVoteRequest $request)
     {
-        $vote->vote = $request->input('vote');
+        $vote->value = $request->input('value');
         $vote->save();
         // add validation
     }

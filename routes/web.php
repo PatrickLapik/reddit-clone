@@ -45,8 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
     Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 
-    Route::post('/vote', [VoteController::class, 'store'])->name('vote.store');
-    Route::patch('/vote', [VoteController::class, 'update'])->name('vote.update');
+    Route::post('/vote/create', [VoteController::class, 'store'])->name('vote.store');
+    Route::patch('/vote/update/{vote}', [VoteController::class, 'update'])->name('vote.update');
     Route::delete('/vote/delete/{vote}', [VoteController::class, 'destroy'])->name('vote.destroy');
 });
 

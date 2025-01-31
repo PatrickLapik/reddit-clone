@@ -49,10 +49,22 @@ class CommunityController extends Controller
      */
     public function show(Request $request): Response
     {
-        $community = Community::where('name', $request->route('community'))->with(['posts:id,community_id,user_id,title,body,created_at', 'posts.user:name,id,avatar'])->first();
+        $userId = $request->user()->id;
+
+        $community = Community::where('name', $request->route('community'))
+            ->with([
+                'posts' => function ($query) {
+                    $query->withSum('votes', 'value');
+                },
+                'posts.user:name,id,avatar',
+                'posts.votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
+                },
+            ])
+            ->first();
 
         if ($community == null) {
-            return Inertia::render('Welcome');
+            return redirect(route('profile'));
         }
 
         $user = $request->user();

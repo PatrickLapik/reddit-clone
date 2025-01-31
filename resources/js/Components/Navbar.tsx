@@ -20,11 +20,6 @@ export default function Navbar() {
 }
 
 function loggedIn() {
-    const { post } = useForm({
-        vote: -1,
-        voteable_type: 'comment',
-        voteable_id: 1
-    });
     return (
         <div className="flex flex-row space-x-2">
             <UserProvider>
@@ -44,7 +39,6 @@ function loggedIn() {
                         <div>Create</div>
                     </SecondaryButton>
                 </Link>
-                <PrimaryButton onClick={() => post(route('vote.store'))}> vote</PrimaryButton>
                 <NavbarDropdown />
             </UserProvider>
         </div>

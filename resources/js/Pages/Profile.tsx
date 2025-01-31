@@ -2,13 +2,13 @@ import Break from '@/Components/Break';
 import PostCard from '@/Components/PostCard';
 import { PostProvider } from '@/Contexts/PostContext';
 import { UserProps } from '@/Contexts/UserContext';
-import AuthenticatedLayout from '@/Layouts/DefaultLayout';
+import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, usePage } from '@inertiajs/react';
 
-export default function Dashboard() {
+export default function Profile() {
     const { profile } = usePage<UserProps>().props;
     return (
-        <AuthenticatedLayout>
+        <DefaultLayout>
             <PostProvider>
                 <Head title={'u/' + profile?.name} />
 
@@ -22,9 +22,9 @@ export default function Dashboard() {
                         <>
                             <PostCard
                                 href={route('post.show', {
-                                    name: profile.name,
                                     post: post.id,
                                 })}
+                                key={post.id}
                                 post={post}
                                 author={profile}
                             />
@@ -33,6 +33,6 @@ export default function Dashboard() {
                     ))}
                 </div>
             </PostProvider>
-        </AuthenticatedLayout>
+        </DefaultLayout>
     );
 }

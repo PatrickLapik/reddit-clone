@@ -22,7 +22,7 @@ class UpdateVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'value' => 'required|in:-1,1'
         ];
     }
 }
