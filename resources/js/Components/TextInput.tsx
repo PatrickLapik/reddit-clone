@@ -14,6 +14,7 @@ type TextInputProps = (
     isFocused?: boolean;
     as?: 'input' | 'textarea';
     type?: string;
+    addBorder?: boolean;
 };
 
 export default forwardRef(function TextInput(
@@ -22,6 +23,7 @@ export default forwardRef(function TextInput(
         className = '',
         isFocused = false,
         as = 'input',
+        addBorder = false,
         ...props
     }: TextInputProps,
     ref,
@@ -38,9 +40,7 @@ export default forwardRef(function TextInput(
         }
     }, [isFocused]);
 
-    const commonClasses =
-        'bg-reddit-dark-secondary w-full rounded-xl border-none focus:border-white focus:ring-white ' +
-        className;
+    const commonClasses = `bg-reddit-dark-secondary w-full rounded-xl focus:border-reddit-border focus:ring-reddit-border ${className} ${addBorder ? ' border' : ' border-none'}`;
 
     return as === 'textarea' ? (
         <textarea

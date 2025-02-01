@@ -8,11 +8,15 @@ interface PostAuthorProps {
     post: Post;
 }
 
-export const PostAuthorContext = () => {
-    const { author, post } = usePost();
-    const timeAgo = formatDistanceToNow(new Date(post.created_at), {
+export const timeAgo = (date: string) => {
+    return formatDistanceToNow(new Date(date), {
         addSuffix: true,
     });
+}
+
+export const PostAuthorContext = () => {
+    const { author, post } = usePost();
+    const passedTime = timeAgo(post.created_at);
 
     return (
         <>
@@ -21,7 +25,7 @@ export const PostAuthorContext = () => {
                     href={route('community.show', post.community.name)}
                     icon={post.community.icon}
                     name={'s/' + post.community.name}
-                    timeAgo={timeAgo}
+                    timeAgo={passedTime}
                 >
                     <Link
                         href={route('profile', author.name)}
@@ -35,7 +39,7 @@ export const PostAuthorContext = () => {
                     href={route('profile', author.name)}
                     icon={author.avatar}
                     name={'u/' + author.name}
-                    timeAgo={timeAgo}
+                    timeAgo={passedTime}
                 />
             )}
         </>
@@ -43,9 +47,7 @@ export const PostAuthorContext = () => {
 };
 
 export const PostAuthorProps = ({ author, post }: PostAuthorProps) => {
-    const timeAgo = formatDistanceToNow(new Date(post.created_at), {
-        addSuffix: true,
-    });
+    const passedTime = timeAgo(post.created_at);
     return (
         <>
             {post.community?.name ? (
@@ -53,7 +55,7 @@ export const PostAuthorProps = ({ author, post }: PostAuthorProps) => {
                     href={route('community.show', post.community.name)}
                     icon={post.community.icon}
                     name={'s/' + post.community.name}
-                    timeAgo={timeAgo}
+                    timeAgo={passedTime}
                 >
                     <Link
                         href={route('profile', author.name)}
@@ -67,7 +69,7 @@ export const PostAuthorProps = ({ author, post }: PostAuthorProps) => {
                     href={route('profile', author.name)}
                     icon={author.avatar}
                     name={'u/' + author.name}
-                    timeAgo={timeAgo}
+                    timeAgo={passedTime}
                 />
             )}
         </>

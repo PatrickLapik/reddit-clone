@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Community;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,7 +31,9 @@ class CommunityPostController extends Controller
     public function show(string $community, string $post)
     {
         $userId = auth()->guard()->id();
-        $post = Post::where('id', $post)->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')
+        $postId = $post;
+
+        $post = Post::where('id', $postId)->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')
             ->with([
                 'community:id,name,icon',
                 'user:id,name,avatar',
@@ -42,8 +44,24 @@ class CommunityPostController extends Controller
             ->withSum('votes', 'value')
             ->first();
 
+        $comments = Comment::where([
+            ['post_id', $postId],
+            ['comment_id', null],
+        ])
+            ->with([
+                'user:id,name,avatar',
+                'replies',
+                'votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)
+                        ->select('id', 'value', 'voteable_id');
+                }
+            ])
+            ->withSum('votes', 'value')
+            ->get();
+
         return Inertia::render('Post/View', [
             'post' => $post,
+            'comments' => $comments,
         ]);
     }
 

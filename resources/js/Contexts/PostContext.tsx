@@ -2,7 +2,6 @@ import { usePage } from '@inertiajs/react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { Community } from './CommunityContext';
 import { User, UserProps } from './UserContext';
-
 interface PostContextType {
     post: Post;
     author: Author;

@@ -26,7 +26,13 @@ export default function PostCard({ author, post, href }: PostCardProps) {
                     )}
                 </div>
             </Link>
-            <Vote postData={post}/>
+
+            <Vote
+                userVote={post.votes?.[0]}
+                voteSum={post.votes_sum_value}
+                voteableType="post"
+                voteableId={post.id}
+            />
         </div>
     );
 }

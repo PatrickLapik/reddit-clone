@@ -49,7 +49,7 @@ export default function CreatePost() {
                         id="body"
                         name="body"
                         as="textarea"
-                        className="h-40 resize-none"
+                        className="h-40"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setData('body', e.target.value)
                         }

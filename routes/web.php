@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\PostController;
@@ -46,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
     Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+
+    Route::post('/post/{post}/comment/{comment?}', [CommentController::class, 'store'])->name('comment.store');
 
     Route::post('/vote/create', [VoteController::class, 'store'])->name('vote.store');
     Route::patch('/vote/update/{vote}', [VoteController::class, 'update'])->name('vote.update');

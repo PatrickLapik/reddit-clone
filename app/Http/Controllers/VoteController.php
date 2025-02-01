@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVoteRequest;
 use App\Http\Requests\UpdateVoteRequest;
-use App\Models\Community;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Vote;
 
@@ -34,9 +34,7 @@ class VoteController extends Controller
         $vote = new Vote($request->validated());
         $vote->user()->associate($request->user());
 
-        /*$voteable = $request->input('voteable_type') == 'post' ? Post::findOrFail($request->input('voteable_id')) : Comment::findOrFail($request->input('voteable_id'));*/
-
-        $voteable = Post::findOrFail($request->input('voteable_id'));
+        $voteable = $request->input('voteable_type') == 'post' ? Post::findOrFail($request->input('voteable_id')) : Comment::findOrFail($request->input('voteable_id'));
 
         $vote->voteable()->associate($voteable);
 

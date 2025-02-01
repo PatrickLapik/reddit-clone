@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->tinyInteger('value')->default(1);
             $table->morphs('voteable');
             $table->unique(['user_id', 'voteable_id', 'voteable_type']);

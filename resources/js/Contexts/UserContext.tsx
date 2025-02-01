@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { Community } from './CommunityContext';
 import { Post } from './PostContext';
+import type { Comment } from './CommentContext';
 
 export interface User extends UserType {
     avatar: string;
@@ -25,6 +26,8 @@ export interface UserProps extends PageProps {
     profile: Profile;
     community?: Community;
     posts?: Post[];
+    post?: Post;
+    comments?: Comment[];
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
