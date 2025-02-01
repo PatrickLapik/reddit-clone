@@ -14,6 +14,7 @@ export interface Post {
     created_at: string;
     community?: Community;
     user: User;
+    comments_count: number;
     votes_sum_value?: number;
     votes?: Vote[];
 }

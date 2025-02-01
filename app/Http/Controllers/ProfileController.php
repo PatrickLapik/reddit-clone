@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -37,7 +38,7 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $name)
+    public function show(string $name, PostService $postService)
     {
         $userId = auth()->guard()->id();
 
@@ -45,17 +46,7 @@ class ProfileController extends Controller
             ->select('id', 'name', 'avatar')
             ->firstOrFail();
 
-        $posts = Post::where('user_id', $userId)
-            ->select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
-            ->latest()
-            ->with([
-                'community:id,name,icon',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('voteable_id', 'value', 'id');
-                },
-            ])
-            ->withSum('votes', 'value')
-            ->get();
+        $posts = $postService->getPosts($userId);
 
         return Inertia::render('Profile', [
             'profile' => $profile,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommunityRequest;
 use App\Models\Community;
 use App\Models\Post;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -48,7 +49,7 @@ class CommunityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request): Response
+    public function show(Request $request, PostService $postService): Response
     {
         $userId = auth()->guard()->id();
 
@@ -59,16 +60,7 @@ class CommunityController extends Controller
             return redirect(route('home'));
         }
 
-        $posts = Post::where('community_id', $community->id)
-            ->with([
-                'user:name,id,avatar',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
-                },
-
-            ])
-            ->withSum('votes', 'value')
-            ->get();
+        $posts = $postService->getCommunityPosts($community->id, $userId);
 
         $user = $request->user();
         $isJoined = $user ? $user->joinedCommunities()->where('community_id', $community->id)->exists() : false;

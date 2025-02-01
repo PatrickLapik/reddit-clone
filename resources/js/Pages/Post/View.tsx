@@ -1,5 +1,6 @@
 import Break from '@/Components/Break';
 import { PostAuthorContext } from '@/Components/PostAuthor';
+import { Comments } from '@/Components/PostCard';
 import Vote from '@/Components/Vote';
 import { PostProps, PostProvider } from '@/Contexts/PostContext';
 import DefaultLayout from '@/Layouts/DefaultLayout';
@@ -21,14 +22,17 @@ export default function PostView() {
                         <div className="text-2xl font-semibold">
                             {post.title}
                         </div>
-                        <div>{post.body}</div>
+                        <div className="whitespace-pre-line">{post.body}</div>
                     </div>
-                    <Vote
-                        userVote={post.votes?.[0]}
-                        voteSum={post.votes_sum_value}
-                        voteableType="post"
-                        voteableId={post.id}
-                    />
+                    <div className="flex items-center space-x-2">
+                        <Vote
+                            userVote={post.votes?.[0]}
+                            voteSum={post.votes_sum_value}
+                            voteableType="post"
+                            voteableId={post.id}
+                        />
+                        <Comments commentCount={post.comments_count} />
+                    </div>
                     <Break />
                     <CommentForm />
                     {comments && <CommentList comments={comments} />}

@@ -70,7 +70,7 @@ const CommentAuthor = ({ author, time, OP }: CommentAuthorProps) => {
 };
 
 const CommentBody = ({ body }: { body: string }) => {
-    return <div className="h-fit w-full text-gray-300 opacity-60">{body}</div>;
+    return <div className="h-fit w-full text-gray-300 opacity-60 whitespace-pre-line">{body}</div>;
 };
 
 const Reply = ({ onClick }: { onClick: () => void }) => {

@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Community;
 use App\Models\Post;
+use App\Services\PostService;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -13,21 +14,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PostService $postService)
     {
         $userId = auth()->guard()->id();
 
-        $posts = Post::select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
-            ->with([
-                'user:id,name,avatar',
-                'community:id,icon,name',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('id', 'voteable_id', 'value');
-                }
-            ])
-            ->withSum('votes', 'value')
-            ->latest()
-            ->get();
+        $posts = $postService->getPosts($userId);
 
         return Inertia::render('Home', [
             'posts' => $posts,

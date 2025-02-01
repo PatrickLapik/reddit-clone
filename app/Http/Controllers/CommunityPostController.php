@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Services\CommentService;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,36 +30,13 @@ class CommunityPostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $community, string $post)
+    public function show(string $community, string $post, PostService $postService, CommentService $commentService)
     {
         $userId = auth()->guard()->id();
         $postId = $post;
 
-        $post = Post::where('id', $postId)->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')
-            ->with([
-                'community:id,name,icon',
-                'user:id,name,avatar',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('id','voteable_id','value');
-                }
-            ])
-            ->withSum('votes', 'value')
-            ->first();
-
-        $comments = Comment::where([
-            ['post_id', $postId],
-            ['comment_id', null],
-        ])
-            ->with([
-                'user:id,name,avatar',
-                'replies',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)
-                        ->select('id', 'value', 'voteable_id');
-                }
-            ])
-            ->withSum('votes', 'value')
-            ->get();
+        $post = $postService->getPost($postId, $userId);
+        $comments = $commentService->getPostComments($postId, $userId);
 
         return Inertia::render('Post/View', [
             'post' => $post,
