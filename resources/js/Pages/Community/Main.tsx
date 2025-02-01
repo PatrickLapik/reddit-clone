@@ -8,14 +8,14 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { usePage } from '@inertiajs/react';
 
 export default function Community() {
-    const { community } = usePage<UserProps>().props;
+    const { posts } = usePage<UserProps>().props;
     return (
         <DefaultLayout>
             <CommunityProvider>
                 <CommunityBanner />
                 <div className="flex w-full flex-row space-x-2">
                     <div className="w-full">
-                        {community?.posts.map((post) => (
+                        {posts?.map((post) => (
                             <>
                                 <PostCard
                                     post={post}

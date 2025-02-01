@@ -10,7 +10,6 @@ export interface Community {
     description: string;
     icon: string;
     banner: string;
-    posts: Post[];
     created_at:string;
     user_id:number;
 }

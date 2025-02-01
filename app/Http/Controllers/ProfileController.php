@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -42,22 +43,23 @@ class ProfileController extends Controller
 
         $profile = User::where('name', $name)
             ->select('id', 'name', 'avatar')
-            ->with(['posts' => function ($query) use ($userId) {
-                $query->select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
-                    ->latest()
-                    ->with([
-                        'community:id,name,icon',
-                        'votes' => function ($query) use ($userId) {
-                            $query->where('user_id', $userId)->select('voteable_id', 'value', 'id');
-                        },
-                    ])
-                    ->withSum('votes', 'value');
-                }
-            ])
             ->firstOrFail();
+
+        $posts = Post::where('user_id', $userId)
+            ->select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
+            ->latest()
+            ->with([
+                'community:id,name,icon',
+                'votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->select('voteable_id', 'value', 'id');
+                },
+            ])
+            ->withSum('votes', 'value')
+            ->get();
 
         return Inertia::render('Profile', [
             'profile' => $profile,
+            'posts' => $posts,
         ]);
     }
 

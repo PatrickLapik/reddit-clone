@@ -6,7 +6,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, usePage } from '@inertiajs/react';
 
 export default function Profile() {
-    const { profile } = usePage<UserProps>().props;
+    const { profile, posts } = usePage<UserProps>().props;
     return (
         <DefaultLayout>
             <PostProvider>
@@ -18,7 +18,7 @@ export default function Profile() {
                 </div>
                 <div>
                     <Break />
-                    {profile?.posts.map((post) => (
+                    {posts?.map((post) => (
                         <>
                             <PostCard
                                 href={route('post.show', {

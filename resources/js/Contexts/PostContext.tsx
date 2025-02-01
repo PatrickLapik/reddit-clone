@@ -65,7 +65,7 @@ export const PostProvider = ({ children }: PropsWithChildren) => {
     }
     return (
         <PostContext.Provider
-            value={{ post: props.profile.posts[0], author: props.profile }}
+            value={{ post: props.post, author: props.profile }}
         >
             {children}
         </PostContext.Provider>

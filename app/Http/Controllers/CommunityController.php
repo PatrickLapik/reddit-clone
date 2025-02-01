@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommunityRequest;
 use App\Models\Community;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -51,27 +52,30 @@ class CommunityController extends Controller
     {
         $userId = auth()->guard()->id();
 
-        $community = Community::where('name', $request->route('community'))
-            ->with([
-                'posts' => function ($query) {
-                    $query->withSum('votes', 'value');
-                },
-                'posts.user:name,id,avatar',
-                'posts.votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
-                },
-            ])
-            ->first();
+        $community = Community::where('name', $request->route('community'))->first();
+
 
         if ($community == null) {
-            return redirect(route('profile'));
+            return redirect(route('home'));
         }
+
+        $posts = Post::where('community_id', $community->id)
+            ->with([
+                'user:name,id,avatar',
+                'votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
+                },
+
+            ])
+            ->withSum('votes', 'value')
+            ->get();
 
         $user = $request->user();
         $isJoined = $user ? $user->joinedCommunities()->where('community_id', $community->id)->exists() : false;
 
         return Inertia::render('Community/Main', [
             'community' => $community,
+            'posts' => $posts,
             'isJoined' => $isJoined,
         ]);
     }
