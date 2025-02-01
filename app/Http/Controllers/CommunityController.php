@@ -49,7 +49,7 @@ class CommunityController extends Controller
      */
     public function show(Request $request): Response
     {
-        $userId = $request->user()->id;
+        $userId = auth()->guard()->id();
 
         $community = Community::where('name', $request->route('community'))
             ->with([

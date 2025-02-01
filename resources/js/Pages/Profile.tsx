@@ -13,7 +13,7 @@ export default function Profile() {
                 <Head title={'u/' + profile?.name} />
 
                 <div className="flex flex-row items-center space-x-2 py-12">
-                    <img className="h-20 rounded-full" src={profile?.avatar} />
+                    <img className="h-20 aspect-square object-cover rounded-full" src={profile?.avatar} />
                     <div className="text-2xl font-semibold">{'u/' + profile?.name}</div>
                 </div>
                 <div>

@@ -15,7 +15,7 @@ export default function Community() {
                 <CommunityBanner />
                 <div className="flex w-full flex-row space-x-2">
                     <div className="w-full">
-                        {community.posts.map((post) => (
+                        {community?.posts.map((post) => (
                             <>
                                 <PostCard
                                     post={post}

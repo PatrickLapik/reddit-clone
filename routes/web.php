@@ -25,6 +25,8 @@ Route::get('/s/{community}', [CommunityController::class, 'show'])->name('commun
 Route::get('/u/{name}', [ProfileController::class, 'show'])->name('profile');
 Route::get('/post/show/{post}', [PostController::class, 'show'])->name('post.show');
 
+Route::get('/', [PostController::class, 'index'])->name('home');
+
 Route::get('/s/{community}/post/{post}', [CommunityPostController::class, 'show'])->name('community.post.show');
 Route::get('/u/{user}/post/{post}', [UserPostController::class, 'show'])->name('user.post.show');
 

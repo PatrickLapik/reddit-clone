@@ -38,17 +38,17 @@ class ProfileController extends Controller
      */
     public function show(string $name)
     {
-        $user = auth()->guard()->user();
+        $userId = auth()->guard()->id();
 
         $profile = User::where('name', $name)
             ->select('id', 'name', 'avatar')
-            ->with(['posts' => function ($query) use ($user) {
+            ->with(['posts' => function ($query) use ($userId) {
                 $query->select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
                     ->latest()
                     ->with([
                         'community:id,name,icon',
-                        'votes' => function ($query) use ($user) {
-                            $query->where('user_id', $user->id)->select('voteable_id', 'value', 'id');
+                        'votes' => function ($query) use ($userId) {
+                            $query->where('user_id', $userId)->select('voteable_id', 'value', 'id');
                         },
                     ])
                     ->withSum('votes', 'value');

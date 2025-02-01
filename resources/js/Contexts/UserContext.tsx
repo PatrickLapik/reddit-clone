@@ -22,9 +22,10 @@ interface Profile {
 
 export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
-    isJoined: boolean;
+    isJoined?: boolean;
     profile: Profile;
-    community: Community;
+    community?: Community;
+    posts?: Post[];
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
