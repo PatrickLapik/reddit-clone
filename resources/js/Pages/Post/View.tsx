@@ -23,9 +23,14 @@ export default function PostView() {
                         </div>
                         <div>{post.body}</div>
                     </div>
-                    <Vote userVote={post.votes?.[0]} voteSum={post.votes_sum_value} voteableType='post' voteableId={post.id}/>
+                    <Vote
+                        userVote={post.votes?.[0]}
+                        voteSum={post.votes_sum_value}
+                        voteableType="post"
+                        voteableId={post.id}
+                    />
                     <Break />
-                    <CommentForm postData={post} />
+                    <CommentForm />
                     {comments && <CommentList comments={comments} />}
                 </div>
             </PostProvider>

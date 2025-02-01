@@ -1,22 +1,33 @@
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Post } from '@/Contexts/PostContext';
+import { usePost } from '@/Contexts/PostContext';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 interface CommentFormProps {
-    postData: Post;
+    parentComment?: number;
+    onSubmit?: () => void;
 }
 
-export default function CommentForm({ postData }: CommentFormProps) {
+export default function CommentForm({
+    parentComment,
+    onSubmit,
+}: CommentFormProps) {
+    const postId = usePost().post.id;
+
     const { post, setData, reset, data } = useForm({
         body: '',
     });
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('comment.store', { post: postData.id }), {
+
+        if (onSubmit) {
+            onSubmit();
+        }
+
+        post(route('comment.store', { post: postId, comment: parentComment }), {
             preserveScroll: true,
             onSuccess: () => reset(),
         });

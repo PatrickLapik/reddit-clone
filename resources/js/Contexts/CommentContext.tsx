@@ -4,6 +4,7 @@ export interface Comment {
     id: number;
     user: Author;
     comment_id: number;
+    post_id: number;
     body: string;
     replies: Comment[];
     votes: Vote[];
