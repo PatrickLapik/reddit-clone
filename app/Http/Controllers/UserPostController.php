@@ -30,7 +30,7 @@ class UserPostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user, string $post, CommentService $commentService, PostService $postService)
+    public function show(string $user, string $post, CommentService $commentService, PostService $postService, Request $request)
     {
         $userId = auth()->guard()->id();
         $postId = $post;
@@ -42,6 +42,9 @@ class UserPostController extends Controller
         return Inertia::render('Post/View', [
             'post' => $post,
             'comments' => $comments,
+            'can' => [
+                'edit_post' => $request->user()->can('update', $post)
+            ],
         ]);
     }
 

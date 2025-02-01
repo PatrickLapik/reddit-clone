@@ -30,7 +30,7 @@ class CommunityPostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $community, string $post, PostService $postService, CommentService $commentService)
+    public function show(string $community, string $post, PostService $postService, CommentService $commentService, Request $request)
     {
         $userId = auth()->guard()->id();
         $postId = $post;
@@ -41,6 +41,9 @@ class CommunityPostController extends Controller
         return Inertia::render('Post/View', [
             'post' => $post,
             'comments' => $comments,
+            'can' => [
+                'edit_post' => $request->user()->can('update', $post),
+            ],
         ]);
     }
 

@@ -62,9 +62,8 @@ class VoteController extends Controller
      */
     public function update(Vote $vote, UpdateVoteRequest $request)
     {
-        $vote->value = $request->input('value');
+        $vote->value = $request->validate('value');
         $vote->save();
-        // add validation
     }
 
     /**

@@ -19,6 +19,10 @@ interface Profile {
     avatar: string;
 }
 
+interface Permissions {
+    edit_post?: boolean;
+}
+
 
 export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
@@ -28,6 +32,7 @@ export interface UserProps extends PageProps {
     posts?: Post[];
     post?: Post;
     comments?: Comment[];
+    can?: Permissions;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

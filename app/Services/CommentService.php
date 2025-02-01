@@ -6,7 +6,7 @@ use App\Models\Comment;
 
 class CommentService
 {
-    public function getPostComments(string $postId, string $userId)
+    public function getPostComments(string $postId, ?string $userId)
     {
         return Comment::where([
             ['post_id', $postId],
@@ -21,6 +21,7 @@ class CommentService
                 }
             ])
             ->withSum('votes', 'value')
+            ->latest()
             ->get();
     }
 }

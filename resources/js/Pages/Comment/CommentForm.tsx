@@ -16,7 +16,7 @@ export default function CommentForm({
 }: CommentFormProps) {
     const postId = usePost().post.id;
 
-    const { post, setData, reset, data } = useForm({
+    const { post, setData, reset, data, errors } = useForm({
         body: '',
     });
 
@@ -36,21 +36,22 @@ export default function CommentForm({
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex w-full flex-col justify-center"
+            className="flex w-full flex-col justify-center border-reddit-border border py-2.5 rounded-3xl text-sm"
         >
             <TextInput
                 as="textarea"
                 id="body"
                 value={data.body}
                 placeholder="Add comment"
-                className="border-reddit-border bg-transparent"
-                addBorder={true}
+                className="border-reddit-border bg-transparent text-sm min-h-8 focus:ring-transparent focus:border-none"
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                     setData('body', e.target.value)
                 }
-            />
-            <InputError />
-            <div className="mt-3 flex w-full items-center justify-end">
+            >
+
+            </TextInput>
+            <InputError message={errors.body} />
+            <div className="mt-3 flex w-full items-center justify-end px-4">
                 <PrimaryButton type="submit">Comment</PrimaryButton>
             </div>
         </form>

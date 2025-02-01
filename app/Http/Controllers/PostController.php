@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Community;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -89,14 +90,25 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        if ($request->user()->cannot('update', $post)) {
+            abort(403);
+        }
+
+        $post->body = $request->validated()['body'];
+        $post->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
-        //
+        if ($request->user()->cannot('delete', $post)) {
+            abort(403);
+        }
+
+        $post->delete();
+
+        return redirect()->route('profile');
     }
 }

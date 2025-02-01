@@ -6,7 +6,7 @@ use App\Models\Post;
 
 class PostService
 {
-    public function getPost(string $postId, string $userId)
+    public function getPost(string $postId, ?string $userId)
     {
         return Post::where('id', $postId)->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')
             ->with([
@@ -18,10 +18,10 @@ class PostService
             ])
             ->withCount('comments')
             ->withSum('votes', 'value')
-            ->first();
+            ->firstOrFail();
     }
 
-    public function getPosts(string $userId)
+    public function getPosts(?string $userId)
     {
         return Post::select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
             ->with([
@@ -37,7 +37,7 @@ class PostService
             ->get();
     }
 
-    public function getCommunityPosts(string $communityId, string $userId)
+    public function getCommunityPosts(string $communityId, ?string $userId)
     {
         return Post::where('community_id', $communityId)
             ->with([

@@ -45,8 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/community/join', [UserJoinedCommunityController::class, 'store'])->name('community.join');
     Route::delete('/community/leave/{id}', [UserJoinedCommunityController::class, 'destroy'])->name('community.leave');
 
-    Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
-    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::controller(PostController::class)->name('post.')->prefix('post')->group(function () {
+        Route::resource('post', PostController::class);
+        Route::post('/create', 'store')->name('store');
+        Route::get('/create', 'create')->name('create');
+        Route::patch('/update/{post}', 'update')->name('update');
+        Route::delete('/delete/{post}', 'destroy')->name('destroy');
+    });
 
     Route::post('/post/{post}/comment/{comment?}', [CommentController::class, 'store'])->name('comment.store');
 
