@@ -1,8 +1,7 @@
 import { UserProps, UserProvider } from '@/Contexts/UserContext';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link,  usePage } from '@inertiajs/react';
 import ApplicationLogo from './ApplicationLogo';
 import NavbarDropdown from './NavbarDropdown';
-import PrimaryButton from './PrimaryButton';
 import SearchBar from './SearchBar';
 import SecondaryButton from './SecondaryButton';
 
@@ -20,10 +19,11 @@ export default function Navbar() {
 }
 
 function loggedIn() {
+    const { community } = usePage<UserProps>().props;
     return (
         <div className="flex flex-row space-x-2">
             <UserProvider>
-                <Link href={route('post.create')}>
+                <Link href={route('post.create', { selected: community?.name })}>
                     <SecondaryButton className="flex h-full w-full flex-row items-center space-x-2">
                         <svg
                             fill="currentColor"

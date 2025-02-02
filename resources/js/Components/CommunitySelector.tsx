@@ -1,8 +1,8 @@
 import { Community } from '@/Contexts/CommunityContext';
 import { User, UserProps } from '@/Contexts/UserContext';
 import { ButtonProps } from '@headlessui/react';
-import { usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useForm, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import Dropdown from './Dropdown';
 
 interface CommunitySelectorProps {
@@ -14,21 +14,38 @@ export default function CommunitySelector({
     communities,
     onSelect,
 }: CommunitySelectorProps) {
-    const { user } = usePage<UserProps>().props.auth;
-    const [selectedField, setSelectedField] = useState<
-        Community | User | undefined
-    >(undefined);
+    const {
+        props: {
+            auth: { user },
+        },
+    } = usePage<UserProps>();
+    const [selected, setSelected] = useState<Community | User | undefined>(user);
+    const { get } = useForm();
 
-    const handleSelect = (id: number) => {
-        if (id === 0) {
-            setSelectedField(user);
-            onSelect(0);
+    useEffect(() => {
+        const selectedName = new URLSearchParams(window.location.search).get(
+            'selected',
+        );
+        if (selectedName) {
+            const selection =
+                selectedName === user.name
+                    ? user
+                    : communities.find((c) => c.name === selectedName);
+
+            if (selection) {
+                setSelected(selection);
+                onSelect(selection === user ? 0 : selection.id);
+            }
         }
-        const newSelection = communities.find((item) => item.id === id);
-        if (newSelection) {
-            setSelectedField(newSelection);
-            onSelect(newSelection.id);
-        }
+    }, [communities, user, onSelect]);
+
+    const handleSelect = (selection: Community | User) => {
+        setSelected(selection);
+        onSelect(selection === user ? 0 : selection.id);
+
+        get(route('post.create', { selected: selection.name }), {
+            preserveState: true,
+        });
     };
 
     return (
@@ -36,18 +53,18 @@ export default function CommunitySelector({
             <div className="w-fit min-w-48">
                 <Dropdown.Trigger>
                     <div className="bg-reddit-dark-secondary flex cursor-pointer items-center justify-between space-x-2 rounded-xl px-2.5 py-3 text-gray-300 hover:brightness-125">
-                        {selectedField && (
-                            <div className="flex flex-row items-center space-x-2 w-full">
+                        {selected && (
+                            <div className="flex w-full flex-row items-center space-x-2">
                                 <img
                                     className="aspect-square h-8 rounded-full object-cover"
                                     src={
-                                        'avatar' in selectedField
-                                            ? selectedField.avatar
-                                            : selectedField.icon
+                                        'avatar' in selected
+                                            ? selected.avatar
+                                            : selected.icon
                                     }
                                 />
-                                <div className='flex flex-row items-center justify-between w-full'>
-                                    <div>{selectedField.name}</div>
+                                <div className="flex w-full flex-row items-center justify-between">
+                                    <div>{selected.name}</div>
                                     <svg
                                         fill="currentColor"
                                         height="20"
@@ -61,7 +78,7 @@ export default function CommunitySelector({
                                 </div>
                             </div>
                         )}
-                        {!selectedField && (
+                        {!selected && (
                             <>
                                 <div>Select a community</div>
                                 <svg
@@ -80,10 +97,10 @@ export default function CommunitySelector({
                 </Dropdown.Trigger>
             </div>
             <Dropdown.Content align="left">
-                <UserSelect onClick={() => handleSelect(0)} />
+                <UserSelect onClick={() => handleSelect(user)} />
                 {communities.map((item) => (
                     <CommunitySelect
-                        onClick={() => handleSelect(item.id)}
+                        onClick={() => handleSelect(item)}
                         community={item}
                     />
                 ))}
