@@ -49,7 +49,7 @@ class CommunityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, PostService $postService): Response
+    public function show(Request $request, PostService $postService)
     {
         $userId = auth()->guard()->id();
 
@@ -57,7 +57,7 @@ class CommunityController extends Controller
 
 
         if ($community == null) {
-            return redirect(route('home'));
+            return redirect()->route('home');
         }
 
         $posts = $postService->getCommunityPosts($community->id, $userId);

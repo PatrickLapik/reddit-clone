@@ -16,8 +16,21 @@ class VoteFactory extends Factory
      */
     public function definition(): array
     {
+        $vote = -1;
+
+        if (rand(0, 4)) {
+            $vote = 1;
+        }
+
         return [
-            //
+            'value' => $vote
         ];
+    }
+
+    public function type(string $type): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'voteable_type' => $type,
+        ]);
     }
 }

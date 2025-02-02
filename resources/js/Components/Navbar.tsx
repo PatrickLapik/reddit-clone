@@ -19,11 +19,11 @@ export default function Navbar() {
 }
 
 function loggedIn() {
-    const { community } = usePage<UserProps>().props;
+    const { community, isJoined } = usePage<UserProps>().props;
     return (
         <div className="flex flex-row space-x-2">
             <UserProvider>
-                <Link href={route('post.create', { selected: community?.name })}>
+                <Link href={route('post.create', { selected: isJoined && community?.name })}>
                     <SecondaryButton className="flex h-full w-full flex-row items-center space-x-2">
                         <svg
                             fill="currentColor"

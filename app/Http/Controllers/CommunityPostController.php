@@ -42,7 +42,7 @@ class CommunityPostController extends Controller
             'post' => $post,
             'comments' => $comments,
             'can' => [
-                'edit_post' => $request->user()->can('update', $post),
+                'edit_post' => $request->user() ? $request->user()->can('update', $post) : false,
             ],
         ]);
     }

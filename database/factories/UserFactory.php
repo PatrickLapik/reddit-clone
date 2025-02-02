@@ -23,11 +23,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $avatar = null;
+
+        if (rand(0, 9)) {
+            $avatar = 'https://picsum.photos/seed/'. fake()->uuid .'/200';
+        }
+
         return [
-            'name' => fake()->name(),
-            'email' => 'test@test.com',
+            'name' => fake()->unique()->userName(),
+            'email' => fake()->unique()->safeEmail(),
+            'avatar' => $avatar ??= 'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg',
             'email_verified_at' => now(),
-            'password' => 1234,
+            'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
@@ -39,6 +46,15 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function testUser(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Shiddit-man',
+            'email' => 'test@test.com',
+            'password' => Hash::make('1234'),
         ]);
     }
 }

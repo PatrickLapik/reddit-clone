@@ -6,6 +6,7 @@ import PrimaryButton from './PrimaryButton';
 export default function CommunityBanner() {
     const { community } = useCommunity();
     const isJoined = usePage<UserProps>().props.isJoined;
+    const loggedIn = usePage<UserProps>().props.auth.user;
 
     const {
         post,
@@ -43,12 +44,14 @@ export default function CommunityBanner() {
                     s/{community.name}
                 </h1>
                 <div className="mt-6 flex justify-end">
-                    <PrimaryButton
-                        className={`${isJoined ? 'opacity-25' : ''}`}
-                        onClick={handleJoinOrLeave}
-                    >
-                        Join
-                    </PrimaryButton>
+                    {loggedIn && (
+                        <PrimaryButton
+                            className={`${isJoined && 'opacity-25'}`}
+                            onClick={handleJoinOrLeave}
+                        >
+                            Join
+                        </PrimaryButton>
+                    )}
                 </div>
             </div>
         </>

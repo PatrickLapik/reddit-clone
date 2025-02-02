@@ -16,8 +16,10 @@ class CommentFactory extends Factory
      */
     public function definition(): array
     {
+        $created_at = fake()->dateTimeBetween('-2 years', 'now');
         return [
-            //
+            'body' => fake()->sentences(rand(1, 3)),
+            'created_at' => $created_at,
         ];
     }
 }
