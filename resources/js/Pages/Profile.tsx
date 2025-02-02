@@ -6,7 +6,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, usePage } from '@inertiajs/react';
 
 export default function Profile() {
-    const { profile, posts } = usePage<UserProps>().props;
+    const { profile, paginated_posts: { data : posts } } = usePage<UserProps>().props;
     return (
         <DefaultLayout>
             <PostProvider>

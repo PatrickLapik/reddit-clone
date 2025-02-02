@@ -8,7 +8,7 @@ import SecondaryButton from './SecondaryButton';
 export default function Navbar() {
     const user = usePage<UserProps>().props.auth.user;
     return (
-        <nav className="border-reddit-border bg-reddit-dark sticky top-0 z-40 border-b px-4 py-1.5">
+        <nav className="border-reddit-border bg-reddit-dark fixed w-full z-40 border-b px-4 py-1.5">
             <div className="flex flex-row items-center justify-between">
                 <ApplicationLogo />
                 <SearchBar />

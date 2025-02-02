@@ -4,6 +4,7 @@ import './bootstrap';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import { PostsProvider } from './Contexts/PostContext';
 
 createInertiaApp({
     title: (title) => `${title}`,
@@ -15,7 +16,11 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <PostsProvider>
+                <App {...props} />
+            </PostsProvider>,
+        );
     },
     progress: {
         color: '#4B5563',

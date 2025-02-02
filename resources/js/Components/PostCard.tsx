@@ -19,9 +19,9 @@ export default function PostCard({ author, post, href }: PostCardProps) {
                         {post.title}
                     </div>
                     {post.body && (
-                        <p className="text-balance whitespace-pre-line">
-                            {post.body.substring(0, 100)}
-                            {post.body.length > 100 ? '...' : ''}
+                        <p className="whitespace-pre-line text-gray-400 text-sm">
+                            {post.body.substring(0, 300)}
+                            {post.body.length > 300 ? '...' : ''}
                         </p>
                     )}
                 </div>

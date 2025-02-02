@@ -40,17 +40,15 @@ class ProfileController extends Controller
      */
     public function show(string $name, PostService $postService)
     {
-        $userId = auth()->guard()->id();
-
         $profile = User::where('name', $name)
             ->select('id', 'name', 'avatar')
             ->firstOrFail();
 
-        $posts = $postService->getPosts($userId);
+        $posts = $postService->getPosts();
 
         return Inertia::render('Profile', [
             'profile' => $profile,
-            'posts' => $posts,
+            'paginated_posts' => $posts,
         ]);
     }
 

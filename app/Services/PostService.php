@@ -21,20 +21,20 @@ class PostService
             ->firstOrFail();
     }
 
-    public function getPosts(?string $userId)
+    public function getPosts()
     {
         return Post::select('id', 'user_id', 'community_id', 'title', 'body', 'created_at')
             ->with([
                 'user:id,name,avatar',
                 'community:id,icon,name',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)->select('id', 'voteable_id', 'value');
+                'votes' => function ($query) {
+                    $query->where('user_id', auth()->guard()->id())->select('id', 'voteable_id', 'value');
                 }
             ])
             ->withCount('comments')
             ->withSum('votes', 'value')
             ->latest()
-            ->get();
+            ->cursorPaginate(10);
     }
 
     public function getCommunityPosts(string $communityId, ?string $userId)

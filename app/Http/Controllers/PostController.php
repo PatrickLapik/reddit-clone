@@ -17,12 +17,14 @@ class PostController extends Controller
      */
     public function index(PostService $postService)
     {
-        $userId = auth()->guard()->id();
+        $posts = $postService->getPosts();
 
-        $posts = $postService->getPosts($userId);
+        if (request()->wantsJson()) {
+            return $posts;
+        }
 
         return Inertia::render('Home', [
-            'posts' => $posts,
+            'paginated_posts' => Inertia::merge($posts),
         ]);
     }
 

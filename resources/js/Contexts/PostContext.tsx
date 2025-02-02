@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { createContext, PropsWithChildren, useContext } from 'react';
+import { createContext, PropsWithChildren, ReactNode, useContext, useState } from 'react';
 import { Community } from './CommunityContext';
 import { User, UserProps } from './UserContext';
 interface PostContextType {
@@ -70,4 +70,30 @@ export const PostProvider = ({ children }: PropsWithChildren) => {
             {children}
         </PostContext.Provider>
     );
+};
+
+interface PostsContextProps {
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  nextPageUrl: string;
+  setNextPageUrl: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const PostsContext = createContext<PostsContextProps | undefined>(undefined);
+
+export const usePosts = () => {
+  const context = useContext(PostsContext);
+  if (!context) throw new Error('usePosts must be used within a PostsProvider');
+  return context;
+};
+
+export const PostsProvider = ({ children }: { children: ReactNode }) => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [nextPageUrl, setNextPageUrl] = useState('');
+
+  return (
+    <PostsContext.Provider value={{ posts, setPosts, nextPageUrl, setNextPageUrl }}>
+      {children}
+    </PostsContext.Provider>
+  );
 };

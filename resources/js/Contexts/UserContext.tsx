@@ -23,10 +23,20 @@ interface Permissions {
     edit_post?: boolean;
 }
 
+interface Pagination {
+    total: number;
+    per_page: number;
+    first_page_url: string;
+    last_page_url: string;
+    next_page_url: string;
+    data: Post[]
+}
+
 
 export interface UserProps extends PageProps {
     auth: { joinedCommunities: Community[]; user: User };
     isJoined?: boolean;
+    paginated_posts: Pagination;
     profile: Profile;
     community?: Community;
     posts?: Post[];

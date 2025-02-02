@@ -11,7 +11,7 @@ export default function DefaultLayout({
             <Navbar />
             <main className="flex h-full w-full flex-row">
                 <SideBar />
-                <div className="h-full w-full flex-col p-4">
+                <div className="mt-16 h-full w-full flex-col p-4">
                     <div className="flex flex-col items-center justify-center">
                         <div className="flex h-screen w-[1120px] flex-col px-4">
                             {header && styledHeader(header)}
@@ -24,8 +24,6 @@ export default function DefaultLayout({
     );
 }
 
-const styledHeader = (header:any) => {
-    return (
-        <div className='text-2xl font-semibold py-4'>{header}</div>
-    )
-}
+const styledHeader = (header: any) => {
+    return <div className="py-4 text-2xl font-semibold">{header}</div>;
+};
