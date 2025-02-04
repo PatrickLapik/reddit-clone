@@ -46,7 +46,7 @@ export default function PostView() {
                     <div className="flex flex-row items-center justify-between">
                         <PostAuthorContext />
                         {can?.edit_post && (
-                            <PostOptionsDropdown
+                            <OptionsDropdown
                                 onClickEdit={() => setEditing(true)}
                                 onClickDelete={handleDelete}
                             />
@@ -87,15 +87,15 @@ export default function PostView() {
     );
 }
 
-interface PostOptionsDropdownProps {
+interface OptionsDropdownProps {
     onClickEdit: () => void;
     onClickDelete: () => void;
 }
 
-const PostOptionsDropdown = ({
+export const OptionsDropdown = ({
     onClickEdit,
     onClickDelete,
-}: PostOptionsDropdownProps) => {
+}: OptionsDropdownProps) => {
     return (
         <Dropdown>
             <Dropdown.Trigger>

@@ -32,19 +32,21 @@ Route::get('/s/{community}/post/{post}', [CommunityPostController::class, 'show'
 Route::get('/u/{user}/post/{post}', [UserPostController::class, 'show'])->name('user.post.show');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/settings/account', [AccountController::class, 'edit'])->name('settings.account');
-    Route::patch('/settings/account', [AccountController::class, 'update'])->name('settings.account.update');
-    Route::delete('/settings/account', [AccountController::class, 'destroy'])->name('settings.account.destroy');
-    Route::get('/settings/profile', [ProfileController::class, 'index'])->name('settings.profile');
-
+    Route::controller(AccountController::class)->name('settings.')->prefix('settings')->group(function () {
+        Route::get('/account', 'edit')->name('account');
+        Route::patch('/account', 'update')->name('account.update');
+        Route::delete('/account', 'destroy')->name('account.destroy');
+        Route::get('/profile', 'index')->name('profile');
+    });
     Route::middleware(['throttle:upload'])->group(function () {
         Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
         Route::post('/community/create', [CommunityController::class, 'store'])->name('community.store');
     });
+    Route::controller(UserJoinedCommunityController::class)->name('community.')->prefix('community')->group(function () {
+        Route::post('/join', 'store')->name('join');
+        Route::delete('/leave/{id}', 'destroy')->name('leave');
+    });
     Route::post('/community/create/unique', [CommunityController::class, 'checkUniqueName'])->name('community.create.validate');
-    Route::post('/community/join', [UserJoinedCommunityController::class, 'store'])->name('community.join');
-    Route::delete('/community/leave/{id}', [UserJoinedCommunityController::class, 'destroy'])->name('community.leave');
-
     Route::controller(PostController::class)->name('post.')->prefix('post')->group(function () {
         Route::resource('post', PostController::class);
         Route::post('/create', 'store')->name('store');
@@ -52,12 +54,16 @@ Route::middleware('auth')->group(function () {
         Route::patch('/update/{post}', 'update')->name('update');
         Route::delete('/delete/{post}', 'destroy')->name('destroy');
     });
-
-    Route::post('/post/{post}/comment/{comment?}', [CommentController::class, 'store'])->name('comment.store');
-
-    Route::post('/vote/create', [VoteController::class, 'store'])->name('vote.store');
-    Route::patch('/vote/update/{vote}', [VoteController::class, 'update'])->name('vote.update');
-    Route::delete('/vote/delete/{vote}', [VoteController::class, 'destroy'])->name('vote.destroy');
+    Route::controller(CommentController::class)->name('comment.')->group(function () {
+        Route::post('/post/{post}/comment/{comment?}', 'store')->name('store');
+        Route::post('/comment/update/{comment}', 'update')->name('update');
+        Route::delete('/comment/delete/{comment}', 'destroy')->name('destroy');
+    });
+    Route::controller(VoteController::class)->name('vote.')->prefix('vote')->group(function () {
+        Route::post('/create', 'store')->name('store');
+        Route::patch('/update/{vote}', 'update')->name('update');
+        Route::delete('/delete/{vote}', 'destroy')->name('destroy');
+    });
 });
 
 

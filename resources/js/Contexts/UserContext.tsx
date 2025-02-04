@@ -21,6 +21,7 @@ interface Profile {
 
 interface Permissions {
     edit_post?: boolean;
+    edit_comments?: { id: number }[];
 }
 
 interface Pagination {

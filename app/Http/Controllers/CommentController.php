@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -63,14 +64,21 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        if ($request->user()->cannot('update', $comment)) {
+            abort(403);
+        }
+        $comment->body = $request->validated()['body'];
+        $comment->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request, Comment $comment)
     {
-        //
+        if ($request->user()->cannot('update', $comment)) {
+            abort(403);
+        }
+        $comment->delete();
     }
 }

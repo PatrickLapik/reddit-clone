@@ -11,9 +11,9 @@ export default function DefaultLayout({
             <Navbar />
             <main className="flex h-full w-full flex-row">
                 <SideBar />
-                <div className="mt-16 h-full w-full flex-col p-4">
-                    <div className="flex flex-col items-center justify-center">
-                        <div className="flex h-screen w-[1120px] flex-col px-4">
+                <div className="mt-16 h-full w-full ml-72 flex-col p-4">
+                    <div className="flex flex-col items-center justify-center w-full">
+                        <div className="flex h-full w-[1120px] flex-col px-4">
                             {header && styledHeader(header)}
                             {children}
                         </div>

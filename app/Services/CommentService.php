@@ -6,7 +6,7 @@ use App\Models\Comment;
 
 class CommentService
 {
-    public function getPostComments(string $postId, ?string $userId)
+    public function getPostComments(string $postId)
     {
         return Comment::where([
             ['post_id', $postId],
@@ -15,8 +15,8 @@ class CommentService
             ->with([
                 'user:id,name,avatar',
                 'replies',
-                'votes' => function ($query) use ($userId) {
-                    $query->where('user_id', $userId)
+                'votes' => function ($query) {
+                    $query->where('user_id', auth()->guard()->id())
                         ->select('id', 'value', 'voteable_id');
                 }
             ])
@@ -24,4 +24,15 @@ class CommentService
             ->latest()
             ->get();
     }
+
+    public function getEditableComments(string $postId)
+    {
+        return Comment::where([
+            ['user_id', auth()->guard()->id()],
+            ['post_id', $postId],
+        ])
+            ->select('id')
+            ->get();
+    }
+
 }

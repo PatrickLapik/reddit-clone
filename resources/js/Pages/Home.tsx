@@ -34,7 +34,7 @@ export default function Home() {
         setIsLoading(false);
     };
     return (
-        <DefaultLayout>
+        <DefaultLayout header="Home page">
             <Head title="Shiddit - Dive into anything" />
             {allPosts.map((post) => (
                 <>

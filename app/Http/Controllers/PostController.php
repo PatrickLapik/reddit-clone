@@ -51,7 +51,7 @@ class PostController extends Controller
 
             $post->save();
 
-            $community = Community::findOrFail($communityId)->select('name')->first();
+            $community = Community::where('id', $communityId)->select('name')->first();
 
             return redirect((route('community.show', ['community' => $community->name])));
         }

@@ -8,7 +8,7 @@ export default function CommunityDescription() {
         year: 'numeric',
     });
     return (
-        <div className="bg-reddit-darkest sticky top-18  w-[480px]  rounded-xl px-5 py-3 h-fit">
+        <div className="bg-reddit-darkest sticky top-20  w-[480px]  rounded-xl px-5 py-3 h-fit">
             <div className="flex flex-col space-y-2">
                 <h3 className="text-lg font-bold"> {community.name} </h3>
                 <p className="text-reddit-text-secondary text-sm">

@@ -3,14 +3,14 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { ChangeEvent } from 'react';
 
-interface EditPostProps {
+interface EditEditableProps {
     onCancel: () => void;
     onSave: () => void;
     onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     textAreaValue: string | undefined;
 }
 
-export default function EditPost({onSave, onCancel, onChange, textAreaValue}:EditPostProps) {
+export default function EditEditable({onSave, onCancel, onChange, textAreaValue}:EditEditableProps) {
     return (
         <div className="flex flex-col space-y-3 rounded-2xl py-2 text-sm border border-reddit-border">
             <TextInput
