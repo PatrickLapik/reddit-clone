@@ -36,8 +36,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/account', 'edit')->name('account');
         Route::patch('/account', 'update')->name('account.update');
         Route::delete('/account', 'destroy')->name('account.destroy');
+    });
+    Route::controller(ProfileController::class)->name('settings.')->prefix('settings')->group(function () {
         Route::get('/profile', 'index')->name('profile');
     });
+
     Route::middleware(['throttle:upload'])->group(function () {
         Route::post('/settings/profile', [ProfileController::class, 'store'])->name('settings.profile.update');
         Route::post('/community/create', [CommunityController::class, 'store'])->name('community.store');

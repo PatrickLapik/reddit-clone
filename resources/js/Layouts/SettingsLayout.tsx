@@ -1,4 +1,4 @@
-import TabSelector from '@/Components/TabSelector';
+import { TabSelectorHref } from '@/Components/TabSelector';
 import { Head } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 import DefaultLayout from './DefaultLayout';
@@ -25,7 +25,7 @@ export default function SettingsLayout({
 
             <div {...props} className="py-4">
                 <div className="mx-auto w-[1120px] space-y-4">
-                    <TabSelector tabs={tab} />
+                    <TabSelectorHref tabs={tab} />
                     {children}
                 </div>
             </div>
