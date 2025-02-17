@@ -41,4 +41,9 @@ class Post extends Model
     {
         return $this->morphMany(Vote::class, 'voteable');
     }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(Media::class);
+    }
 }
