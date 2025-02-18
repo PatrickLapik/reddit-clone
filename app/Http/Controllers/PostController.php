@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Community;
+use App\Models\Media;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -41,11 +43,24 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        dd($request);
         $post = new Post($request->validated());
         $post->user()->associate($request->user());
 
+        $post->save();
+
         $communityId = $request->input('community_id');
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $url = $file->store('posts', ['disk' => 'public']);
+                $publicPath = Storage::url($url);
+
+                $post->media()->create([
+                    'path' => $publicPath,
+                ]);
+            }
+        }
+
 
         if ($communityId) {
             $post->community()->associate($communityId);
@@ -56,8 +71,6 @@ class PostController extends Controller
 
             return redirect((route('community.show', ['community' => $community->name])));
         }
-
-        $post->save();
 
         return redirect(route('profile', ['name' => $request->user()->name]));
     }
