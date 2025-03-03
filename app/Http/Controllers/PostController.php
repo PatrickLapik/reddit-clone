@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Community;
-use App\Models\Media;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;

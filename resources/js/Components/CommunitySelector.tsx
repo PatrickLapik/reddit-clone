@@ -37,7 +37,7 @@ export default function CommunitySelector({
                 onSelect(selection === user ? 0 : selection.id);
             }
         }
-    }, [communities, user, onSelect]);
+    }, [communities, user]);
 
     const handleSelect = (selection: Community | User) => {
         setSelected(selection);
@@ -100,6 +100,7 @@ export default function CommunitySelector({
                 <UserSelect onClick={() => handleSelect(user)} />
                 {communities.map((item) => (
                     <CommunitySelect
+                        key={item.id}
                         onClick={() => handleSelect(item)}
                         community={item}
                     />

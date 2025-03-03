@@ -27,6 +27,7 @@ class PostService
             ->with([
                 'user:id,name,avatar',
                 'community:id,icon,name',
+                'media',
                 'votes' => function ($query) {
                     $query->where('user_id', auth()->guard()->id())->select('id', 'voteable_id', 'value');
                 }

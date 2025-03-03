@@ -2,6 +2,7 @@ import { Author, Post } from '@/Contexts/PostContext';
 import { Link } from '@inertiajs/react';
 import { PostAuthorProps } from './PostAuthor';
 import Vote from './Vote';
+import { FileCarousel } from './FileCarousel';
 
 interface PostCardProps {
     href: string;
@@ -11,18 +12,21 @@ interface PostCardProps {
 
 export default function PostCard({ author, post, href }: PostCardProps) {
     return (
-        <div className="hover:bg-reddit-dark-secondary flex flex-col rounded-3xl px-4 py-2.5 space-y-3">
+        <div className="hover:bg-reddit-dark-secondary flex flex-col space-y-3 rounded-3xl px-4 py-2.5">
             <Link href={href} className="flex flex-col space-y-2">
                 <div className="text-wrap">
                     <PostAuthorProps author={author} post={post} />
                     <div className="mt-3 text-xl font-semibold">
                         {post.title}
                     </div>
-                    {post.body && (
-                        <p className="whitespace-pre-line text-gray-400 text-sm">
+                    {post.body && post.media[0] == undefined && (
+                        <p className="text-sm whitespace-pre-line text-gray-400">
                             {post.body.substring(0, 300)}
                             {post.body.length > 300 ? '...' : ''}
                         </p>
+                    )}
+                    {post.media[0] && (
+                        <FileCarousel media={post.media}/>
                     )}
                 </div>
             </Link>

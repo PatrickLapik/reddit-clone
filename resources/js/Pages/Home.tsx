@@ -37,7 +37,9 @@ export default function Home() {
         <DefaultLayout header="Home page">
             <Head title="Shiddit - Dive into anything" />
             {allPosts.map((post) => (
-                <>
+                <div
+                    key={post.id}
+                >
                     <PostCard
                         post={post}
                         author={post.user}
@@ -47,7 +49,7 @@ export default function Home() {
                         })}
                     />
                     <Break />
-                </>
+                </div>
             ))}
             <InfiniteScrollObserver
                 onVisible={fetchMorePosts}

@@ -14,9 +14,15 @@ export interface Post {
     created_at: string;
     community?: Community;
     user: User;
+    media?: Media[];
     comments_count: number;
     votes_sum_value?: number;
     votes?: Vote[];
+}
+
+export interface Media {
+    id: number;
+    path: string;
 }
 
 export interface Vote {
