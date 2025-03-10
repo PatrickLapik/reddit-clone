@@ -1,4 +1,11 @@
 import type { Media } from '@/Contexts/PostContext';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from './Ui/carousel';
 
 interface FileCarouselProps {
     media: Media[];
@@ -6,21 +13,27 @@ interface FileCarouselProps {
 
 export function FileCarousel({ media }: FileCarouselProps) {
     return (
-        <div className="flex flex-row">
-            <CarouselButton />
-            <div className='flex flex-col'>
-                {media.map((media) => (
-                    <ImageView path={media.path} key={media.id} />
+        <Carousel>
+            <CarouselContent>
+                {media.map((item) => (
+                    <CarouselItem key={item.id}>
+                        <ImageView path={item.path} />
+                    </CarouselItem>
                 ))}
-            </div>
-            <CarouselButton />
-        </div>
+            </CarouselContent>
+            {media.length > 1 && (
+                <>
+                    <CarouselNext />
+                    <CarouselPrevious />
+                </>
+            )}
+        </Carousel>
     );
 }
 
-function ImageView({ path }: { path: string; key: number }) {
+function ImageView({ path }: { path: string }) {
     return (
-        <div className="my-2 flex h-full w-full justify-center overflow-hidden rounded-3xl">
+        <div className="flex h-full w-full justify-center overflow-hidden rounded-3xl">
             <div className="relative flex h-full w-full items-center justify-center">
                 <img
                     className="absolute top-0 left-0 h-full w-full scale-110 object-cover blur-3xl"
@@ -39,7 +52,7 @@ function ImageView({ path }: { path: string; key: number }) {
 
 function CarouselButton() {
     return (
-        <button className="flex items-center justify-center rounded-full bg-reddit-dark h-10 w-10 p-2 hover:bg-reddit-border-secondary cursor-pointer opacity-45">
+        <button className="bg-reddit-dark hover:bg-reddit-border-secondary flex h-10 w-10 cursor-pointer items-center justify-center rounded-full p-2 opacity-45">
             <svg
                 height="16"
                 className="fill-white opacity-100"
