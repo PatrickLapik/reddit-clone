@@ -44,7 +44,7 @@ class ProfileController extends Controller
             ->select('id', 'name', 'avatar')
             ->firstOrFail();
 
-        $posts = $postService->getPosts();
+        $posts = $postService->getProfilePosts($profile->id, auth()->guard()->id());
 
         return Inertia::render('Profile', [
             'profile' => $profile,

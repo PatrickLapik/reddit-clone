@@ -136,7 +136,7 @@ const CommentAuthor = ({ author, time, OP, edited }: CommentAuthorProps) => {
 
 const CommentBody = ({ body }: { body: string }) => {
     return (
-        <div className="h-fit w-full whitespace-pre-line text-gray-300 opacity-60">
+        <div className="h-fit w-full whitespace-pre-line text-white opacity-80">
             {body}
         </div>
     );

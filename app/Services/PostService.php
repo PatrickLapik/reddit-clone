@@ -54,4 +54,22 @@ class PostService
             ->withSum('votes', 'value')
             ->get();
     }
+
+    public function getProfilePosts(string $profileId, ?string $userId)
+    {
+        return Post::where('user_id', $profileId)
+            ->with([
+                'user:name,id,avatar',
+                'community:id,icon,name',
+                'media',
+                'votes' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
+                },
+
+            ])
+            ->withCount('comments')
+            ->withSum('votes', 'value')
+            ->latest()
+            ->cursorPaginate(10);
+    }
 }

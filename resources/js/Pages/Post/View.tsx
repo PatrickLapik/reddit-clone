@@ -1,6 +1,6 @@
 import Break from '@/Components/Break';
 import Dropdown from '@/Components/Dropdown';
-import { FileCarousel } from '@/Components/FileCarousel';
+import { FileCarousel, FileCarouselWithImagePreview } from '@/Components/FileCarousel';
 import { PostAuthorContext } from '@/Components/PostAuthor';
 import { Comments } from '@/Components/PostCard';
 import Vote from '@/Components/Vote';
@@ -66,10 +66,12 @@ export default function PostView() {
                             />
                         ) : (
                             <div>
-                                <div className="whitespace-pre-line">
+                                {post.media?.length > 0 && (
+                                    <FileCarouselWithImagePreview media={post.media} />
+                                )}
+                                <div className="whitespace-pre-line mt-2">
                                     {post.body}
                                 </div>
-                                <FileCarousel media={post.media} />
                             </div>
                         )}
                     </div>
