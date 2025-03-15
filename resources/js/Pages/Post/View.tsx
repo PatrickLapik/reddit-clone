@@ -1,5 +1,6 @@
 import Break from '@/Components/Break';
 import Dropdown from '@/Components/Dropdown';
+import { FileCarousel } from '@/Components/FileCarousel';
 import { PostAuthorContext } from '@/Components/PostAuthor';
 import { Comments } from '@/Components/PostCard';
 import Vote from '@/Components/Vote';
@@ -64,8 +65,11 @@ export default function PostView() {
                                 textAreaValue={data.body}
                             />
                         ) : (
-                            <div className="whitespace-pre-line">
-                                {post.body}
+                            <div>
+                                <div className="whitespace-pre-line">
+                                    {post.body}
+                                </div>
+                                <FileCarousel media={post.media} />
                             </div>
                         )}
                     </div>

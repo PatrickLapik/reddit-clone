@@ -13,12 +13,14 @@ const tabs: TabSpa[] = [
 ];
 
 export default function CreatePost() {
-    const { post, setData } = useForm({
+    const { post, setData, data } = useForm({
         title: '',
         body: '',
         files: [] as File[],
         community_id: 0,
     });
+
+    console.log(data.title)
 
     const { joinedCommunities } = usePage<UserProps>().props.auth;
 
@@ -40,8 +42,22 @@ export default function CreatePost() {
                 <TabSelectorSpa
                     tabs={tabs}
                     children={{
-                        text: <TextForm setData={setData} />,
-                        image: <ImageForm setData={setData} />,
+                        text: (
+                            <TextForm
+                                onChange={({ name, value }: UserFormName) =>
+                                    setData(name, value)
+                                }
+                                data={data}
+                            />
+                        ),
+                        image: (
+                            <ImageForm
+                                onChange={({ name, value }: UserFormName) =>
+                                    setData(name, value)
+                                }
+                                data={data}
+                            />
+                        ),
                     }}
                 />
             </form>
@@ -53,10 +69,26 @@ export default function CreatePost() {
 }
 
 interface FormProps {
-    setData: (key: string, value: string | File[]) => void;
+    onChange: ({ name, value }: UserFormName) => void;
+    data: FormData;
 }
 
-function TextForm({ setData }: FormProps) {
+interface FormData {
+    title: string;
+    body: string;
+    files: File[];
+    community_id: number;
+}
+
+interface UserFormName {
+    name: 'title' | 'body' | 'files' | 'community_id';
+    value: any;
+}
+
+function TextForm({ onChange, data }: FormProps) {
+    const handleChange = ({ name, value }: UserFormName) => {
+        onChange({ name, value: value });
+    };
     return (
         <div className="flex-col space-y-8">
             <div>
@@ -69,8 +101,9 @@ function TextForm({ setData }: FormProps) {
                     name="title"
                     className="h-14"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setData('title', e.target.value)
+                        handleChange({ name: 'title', value: e.target.value })
                     }
+                    value={data.title}
                 />
             </div>
             <div>
@@ -83,15 +116,19 @@ function TextForm({ setData }: FormProps) {
                     as="textarea"
                     className="h-40"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setData('body', e.target.value)
+                        handleChange({ name: 'body', value: e.target.value })
                     }
+                    value={data.body}
                 />
             </div>
         </div>
     );
 }
 
-function ImageForm({ setData }: FormProps) {
+function ImageForm({ onChange, data }: FormProps) {
+    const handleChange = ({ name, value }: UserFormName) => {
+        onChange({ name, value: value });
+    };
     return (
         <div className="flex-col space-y-8">
             <div>
@@ -104,8 +141,24 @@ function ImageForm({ setData }: FormProps) {
                     name="title"
                     className="h-14"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setData('title', e.target.value)
+                        handleChange({ name: 'title', value: e.target.value })
                     }
+                    value={data.title}
+                />
+            </div>
+            <div>
+                <InputLabel htmlFor="body" className="text-lg">
+                    <span>Body</span>
+                </InputLabel>
+                <TextInput
+                    id="body"
+                    name="body"
+                    as="textarea"
+                    className="h-40"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange({ name: 'body', value: e.target.value })
+                    }
+                    value={data.body}
                 />
             </div>
             <div>
@@ -114,10 +167,12 @@ function ImageForm({ setData }: FormProps) {
                     type="file"
                     multiple
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setData(
-                            'files',
-                            e.target.files ? Array.from(e.target.files) : [],
-                        )
+                        handleChange({
+                            name: 'files',
+                            value: e.target.files
+                                ? Array.from(e.target.files)
+                                : [],
+                        })
                     }
                 />
             </div>

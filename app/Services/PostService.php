@@ -11,6 +11,7 @@ class PostService
         return Post::where('id', $postId)->select('id', 'community_id', 'user_id', 'title', 'body', 'created_at')
             ->with([
                 'user:id,name,avatar',
+                'media',
                 'community:id,name,icon',
                 'votes' => function ($query) use ($userId) {
                     $query->where('user_id', $userId)->select('id', 'voteable_id', 'value');
@@ -43,6 +44,7 @@ class PostService
         return Post::where('community_id', $communityId)
             ->with([
                 'user:name,id,avatar',
+                'media',
                 'votes' => function ($query) use ($userId) {
                     $query->where('user_id', $userId)->select('id', 'value', 'voteable_id');
                 },

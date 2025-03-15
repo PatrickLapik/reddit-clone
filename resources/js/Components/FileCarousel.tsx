@@ -23,8 +23,8 @@ export function FileCarousel({ media }: FileCarouselProps) {
             </CarouselContent>
             {media.length > 1 && (
                 <>
-                    <CarouselNext />
-                    <CarouselPrevious />
+                    <CarouselNext className='bg-reddit-dark opacity-50' />
+                    <CarouselPrevious className='bg-reddit-dark opacity-50' />
                 </>
             )}
         </Carousel>
@@ -34,35 +34,18 @@ export function FileCarousel({ media }: FileCarouselProps) {
 function ImageView({ path }: { path: string }) {
     return (
         <div className="flex h-full w-full justify-center overflow-hidden rounded-3xl">
-            <div className="relative flex h-full w-full items-center justify-center">
+            <div className="relative flex w-full items-center justify-center max-h-[40vh]">
                 <img
                     className="absolute top-0 left-0 h-full w-full scale-110 object-cover blur-3xl"
                     src={path}
                     alt="Background"
                 />
                 <img
-                    className="relative z-10 max-h-[40vh] object-contain"
+                    className="relative z-10 object-contain h-full"
                     src={path}
                     alt="Main"
                 />
             </div>
         </div>
-    );
-}
-
-function CarouselButton() {
-    return (
-        <button className="bg-reddit-dark hover:bg-reddit-border-secondary flex h-10 w-10 cursor-pointer items-center justify-center rounded-full p-2 opacity-45">
-            <svg
-                height="16"
-                className="fill-white opacity-100"
-                icon-name="right-fill"
-                viewBox="0 0 20 20"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path d="m7.207 19.707-1.414-1.414L14.086 10 5.793 1.707 7.207.293l9 9a1 1 0 0 1 0 1.414l-9 9Z"></path>
-            </svg>
-        </button>
     );
 }
