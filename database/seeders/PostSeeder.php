@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Community;
+use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Vote;
@@ -31,8 +32,15 @@ class PostSeeder extends Seeder
 
             $post->save();
 
+            if (rand(0, 7)) {
+                Media::factory()
+                    ->count(rand(1, 10))
+                    ->for($post)
+                    ->create();
+            }
+
             foreach ($users as $user) {
-                if(!$randVotes) {
+                if (!$randVotes) {
                     break;
                 }
                 Vote::factory(1)
