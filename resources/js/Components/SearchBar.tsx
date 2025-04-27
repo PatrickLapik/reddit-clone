@@ -23,7 +23,7 @@ export default function SearchBar() {
             <TextInput
                 id="search"
                 name="search"
-                placeholder="Search Reddit"
+                placeholder="Search Shiddit"
                 className="flex-grow bg-transparent px-2 text-sm text-gray-200 placeholder-gray-400 focus:ring-0 focus:outline-none"
             />
         </div>

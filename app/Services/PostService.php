@@ -52,6 +52,7 @@ class PostService
             ])
             ->withCount('comments')
             ->withSum('votes', 'value')
+            ->latest()
             ->get();
     }
 

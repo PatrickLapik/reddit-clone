@@ -124,6 +124,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('profile');
+        return redirect()->route('profile', [ 'name' => $request->user()->name]);
     }
 }
